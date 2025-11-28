@@ -95,15 +95,15 @@
 
                     <div class="data-block">
                         <span class="data-label">PROJECT BRIEF</span>
-                        <p>A rhythm-based embedded game system inspired by Guitar Hero. The system processes user inputs in real-time to match scrolling notes displayed on an LCD, requiring precise timing and interrupt handling.</p>
+                        <p>A rhythm-based embedded game system inspired by Guitar Hero. The system processes user inputs in real-time to match scrolling notes displayed on an LCD, requiring precise timing and interrupt handling. Handles audio through the use of audio DAC and a stereo amplifier. This entire project runs of a libo battery with built in charging when plugged into a power source.</p>
                     </div>
 
                     <div class="data-block">
                         <span class="data-label">TECHNICAL SPECIFICATIONS</span>
                         <div class="spec-grid">
                             <span class="spec-key">MCU:</span> <span class="spec-val">STM32 (ARM Cortex-M)</span>
-                            <span class="spec-key">LANGUAGE:</span> <span class="spec-val">C / C++ / Assembly</span>
-                            <span class="spec-key">DISPLAY:</span> <span class="spec-val">SPI TFT LCD Module</span>
+                            <span class="spec-key">LANGUAGE:</span> <span class="spec-val">C / Python</span>
+                            <span class="spec-key">DISPLAY:</span> <span class="spec-val">SPI OLED Display</span>
                             <span class="spec-key">INPUT:</span> <span class="spec-val">4x Tactile Buttons (GPIO IRQ)</span>
                             <span class="spec-key">PROTOCOL:</span> <span class="spec-val">SPI, I2C, UART</span>
                         </div>
@@ -111,7 +111,7 @@
 
                     <div class="data-block">
                         <span class="data-label">ENGINEERING CHALLENGES</span>
-                        <p>The main challenge was managing screen refresh rates while handling button interrupts. Using <strong>Direct Memory Access (DMA)</strong> for the display buffer allowed the CPU to focus on game logic and audio timing without visual tearing.</p>
+                        <p>The main challenge was learning new pcb manufacture techniques to ensure no noise or arrors when transmitting high frequency signalys. </p>
                     </div>
 
                     <a href="index.html" class="btn-back"><< RETURN_MAIN</a>
