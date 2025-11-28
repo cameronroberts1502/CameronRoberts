@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENGINEER_PORTFOLIO // FINAL_REV</title>
+    <style>
+        /* --- 1. FONTS & VARS --- */
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap');
+
+        :root {
+            --scope-bg: #111411; 
+            --trace-color: #4aff4a;
+            --trace-glow: rgba(74, 255, 74, 0.6);
+            --grid-color: rgba(74, 255, 74, 0.15);
+            --text-color: #ccffcc;
+            --crt-curvature: 12px;
+        }
+
+        * { box-sizing: border-box; cursor: none; /* Hide default cursor */ }
+
+        body {
+            margin: 0;
+            background-color: #050505;
+            font-family: 'Rajdhani', sans-serif;
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; 
+            user-select: none; /* Prevent text highlighting while using knobs */
+        }
+
+        /* --- 2. CHASSIS --- */
+        .scope-chassis {
+            width: 95vw; height: 95vh;
+            background: #1a1a1a;
+            border-radius: 20px;
+            box-shadow: inset 0 0 40px #000, 0 0 20px rgba(0,0,0,0.8);
+            display: flex; flex-direction: column;
+            padding: 20px; position: relative;
+            border: 2px solid #333;
+        }
+
+        /* --- 3. CRT SCREEN --- */
+        .crt-container {
+            flex-grow: 1;
+            background-color: var(--scope-bg);
+            border-radius: var(--crt-curvature);
+            position: relative; overflow: hidden;
+            border: 4px solid #111;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        /* --- 4. FIXED LAYERS --- */
+        .graticule {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 10% 10%; 
+            z-index: 1; pointer-events: none;
+        }
+
+        canvas#wave-canvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 2; opacity: 0.8; pointer-events: none;
+        }
+
+        /* --- 5. CURSOR FIXES --- */
+        /* We use transform to center the 1px line exactly on the mouse point */
+        #cursor-h, #cursor-v {
+            position: absolute;
+            background: rgba(74, 255, 74, 0.8);
+            pointer-events: none;
+            z-index: 20;
+            display: none;
+        }
+        
+        #cursor-h { 
+            height: 1px; width: 100%; left: 0; 
+            box-shadow: 0 0 4px var(--trace-color); 
+            transform: translateY(-50%); /* Centers line vertically on mouse */
+        }
+        
+        #cursor-v { 
+            width: 1px; height: 100%; top: 0; 
+            box-shadow: 0 0 4px var(--trace-color); 
+            transform: translateX(-50%); /* Centers line horizontally on mouse */
+        }
+        
+        .cursor-readout {
+            position: absolute;
+            color: var(--trace-color);
+            font-size: 0.9rem;
+            background: rgba(0, 20, 0, 0.9);
+            padding: 4px 8px;
+            pointer-events: none;
+            z-index: 21;
+            border: 1px solid var(--trace-color);
+            transform: translate(15px, -15px); /* Offset from mouse */
+        }
+
+        /* --- 6. CONTENT --- */
+        .scroll-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            overflow-y: auto; z-index: 10;
+            scrollbar-width: thin; scrollbar-color: var(--trace-color) #111;
+        }
+
+        .screen-content {
+            padding: 40px; max-width: 1000px; margin: 0 auto;
+            position: relative; z-index: 11;
+        }
+
+        header {
+            border-bottom: 2px solid var(--grid-color);
+            margin-bottom: 40px; padding-bottom: 20px;
+            backdrop-filter: blur(2px);
+        }
+
+        h1 { font-size: 4rem; margin: 0; text-transform: uppercase; text-shadow: 0 0 10px var(--trace-glow); }
+
+        .project-row { display: flex; gap: 20px; flex-wrap: wrap; }
+
+        .project-card {
+            flex: 1; min-width: 300px;
+            background: rgba(0, 15, 0, 0.7);
+            border: 1px solid var(--trace-color);
+            padding: 20px; margin-bottom: 20px;
+            cursor: pointer; transition: 0.3s;
+        }
+        .project-card:hover {
+            background: rgba(57, 255, 20, 0.2);
+            box-shadow: 0 0 20px var(--trace-glow);
+        }
+        .project-img {
+            width: 100%; height: 180px; object-fit: cover;
+            border: 1px solid var(--grid-color);
+            filter: grayscale(100%) sepia(100%) hue-rotate(50deg) saturate(300%) contrast(1.2);
+        }
+        .btn {
+            display: inline-block; margin-top: 10px; padding: 8px 20px;
+            border: 1px solid var(--trace-color); color: var(--trace-color);
+            text-decoration: none; text-transform: uppercase; font-weight: 700; cursor: pointer;
+        }
+
+        /* --- 7. CONTROLS --- */
+        .controls-bottom {
+            height: 80px; background: #222;
+            display: flex; align-items: center; justify-content: center; gap: 40px;
+            border-top: 2px solid #333; color: #888; font-size: 0.8rem;
+        }
+        
+        .knob-wrapper { text-align: center; cursor: pointer; transition: color 0.2s; }
+        .knob-wrapper:hover { color: #fff; }
+        
+        .knob {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #444, #111);
+            border: 2px solid #000; margin: 5px auto;
+            position: relative; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 5px rgba(0,0,0,0.5);
+        }
+        /* Knob Indicator Line */
+        .knob::after { content: ''; position: absolute; top: 4px; left: 50%; width: 2px; height: 14px; background: #fff; transform: translateX(-50%); }
+
+    </style>
+</head>
+<body>
+
+    <div class="scope-chassis">
+        <div class="crt-container">
+            <div class="graticule"></div>
+            <canvas id="wave-canvas"></canvas>
+            
+            <div id="cursor-h"></div>
+            <div id="cursor-v"></div>
+            <div id="cursor-readout" class="cursor-readout">0V</div>
+
+            <div class="scroll-layer">
+                <div class="screen-content">
+                    <header>
+                        <h1>[ CAMERON ROBERTS ]</h1>
+                        <div>ELECTRICAL ENGINEERING PORTFOLIO</div>
+                    </header>
+
+                    <div id="projects-container" class="project-row"></div>
+                    
+                    <div style="height: 200px"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-bottom">
+            <div class="knob-wrapper" id="btn-intensity">
+                <div class="knob" style="transform: rotate(0deg)"></div>
+                INTENSITY
+            </div>
+            <div class="knob-wrapper" id="btn-focus">
+                <div class="knob" style="transform: rotate(0deg)"></div>
+                FOCUS
+            </div>
+            <div class="knob-wrapper" id="btn-pos-x">
+                <div class="knob" style="transform: rotate(0deg)"></div>
+                POS X
+            </div>
+            <div class="knob-wrapper" id="btn-pos-y">
+                <div class="knob" style="transform: rotate(0deg)"></div>
+                POS Y
+            </div>
+        </div>
+    </div>
+
+   <script>
+        // --- DATA ---
+        const projects = [
+            { title: "Inverted Pendulum", type: "control", desc: "PID control loop on STM32.", image: null },
+            { title: "Logic Analyzer", type: "digital", desc: "FPGA based 8-channel sniffer.", image: null },
+            { title: "Synthesizer", type: "analog", desc: "555-timer based sawtooth.", image: null },
+            { title: "PCB Card", type: "pcb", desc: "NFC enabled FR4 card.", image: null }
+        ];
+
+        // --- INIT PROJECTS ---
+        const container = document.getElementById('projects-container');
+        projects.forEach(p => {
+            const imgHTML = p.image ? `<img src="${p.image}" class="project-img">` : `<div style="height:150px; border:1px dashed var(--trace-color); display:flex; align-items:center; justify-content:center; margin:15px 0;">NO IMG</div>`;
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            // Force cursor: none here to prevent the "Hand" icon from appearing
+            card.style.cursor = 'none'; 
+            card.innerHTML = `<h3>${p.title}</h3>${imgHTML}<p>${p.desc}</p><a class="btn" style="cursor: none;">View</a>`;
+            
+            card.addEventListener('mouseenter', () => { targetWaveType = p.type; });
+            card.addEventListener('mouseleave', () => { targetWaveType = 'idle'; });
+            container.appendChild(card);
+        });
+
+        // --- KNOB STATE ---
+        let intensity = 1;
+        let focusBlur = false;
+        let posX = 0; 
+        let posY = 0; 
+
+        // --- KNOB HANDLERS ---
+        document.getElementById('btn-intensity').addEventListener('click', function() {
+            intensity = intensity === 1 ? 0.3 : 1;
+            this.querySelector('.knob').style.transform = intensity === 1 ? 'rotate(0deg)' : 'rotate(-140deg)';
+            document.documentElement.style.setProperty('--trace-color', intensity === 1 ? '#4aff4a' : '#1a551a');
+            document.documentElement.style.setProperty('--trace-glow', intensity === 1 ? 'rgba(74, 255, 74, 0.6)' : 'rgba(74, 255, 74, 0)');
+        });
+
+        document.getElementById('btn-focus').addEventListener('click', function() {
+            focusBlur = !focusBlur;
+            this.querySelector('.knob').style.transform = focusBlur ? 'rotate(45deg)' : 'rotate(0deg)';
+        });
+
+        document.getElementById('btn-pos-x').addEventListener('click', function() {
+            if(posX === 0) posX = 100; else if(posX === 100) posX = -100; else posX = 0;
+            let deg = posX === 100 ? 45 : (posX === -100 ? -45 : 0);
+            this.querySelector('.knob').style.transform = `rotate(${deg}deg)`;
+        });
+
+        document.getElementById('btn-pos-y').addEventListener('click', function() {
+            if(posY === 0) posY = 50; else if(posY === 50) posY = -50; else posY = 0;
+            let deg = posY === 50 ? 45 : (posY === -50 ? -45 : 0);
+            this.querySelector('.knob').style.transform = `rotate(${deg}deg)`;
+        });
+
+
+        // --- OSCILLOSCOPE LOGIC ---
+        const canvas = document.getElementById('wave-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, canvasRect; // canvasRect is key for the fix
+
+        function resize() {
+            const parent = canvas.parentElement;
+            width = parent.offsetWidth;
+            height = parent.offsetHeight;
+            canvas.width = width;
+            canvas.height = height;
+            // Capture the box position for coordinate math
+            canvasRect = canvas.getBoundingClientRect(); 
+        }
+        window.addEventListener('resize', resize);
+        // Call resize immediately to set initial size
+        setTimeout(resize, 10); 
+
+        let time = 0;
+        let targetWaveType = 'idle';
+        let mouseX = -100; // Start off screen
+        let mouseY = -100;
+        let pulseActive = 0; // For click effect
+
+        // Mouse Tracker
+        const cursorH = document.getElementById('cursor-h');
+        const cursorV = document.getElementById('cursor-v');
+        const readout = document.getElementById('cursor-readout');
+        const scrollLayer = document.querySelector('.scroll-layer');
+
+        scrollLayer.addEventListener('mousemove', (e) => {
+            // THE FIX: Subtract the container's position from the mouse position
+            if(!canvasRect) return;
+            mouseX = e.clientX - canvasRect.left;
+            mouseY = e.clientY - canvasRect.top;
+            
+            cursorH.style.display = 'block';
+            cursorV.style.display = 'block';
+            
+            cursorH.style.top = mouseY + 'px';
+            cursorV.style.left = mouseX + 'px';
+            
+            readout.style.left = (mouseX) + 'px';
+            readout.style.top = (mouseY) + 'px';
+
+            const voltage = ((height/2 - mouseY) / 50).toFixed(2);
+            readout.innerText = `ΔV: ${voltage}V`;
+        });
+
+        // Add Click Interaction (Pulse)
+        scrollLayer.addEventListener('mousedown', () => {
+            pulseActive = 20; // Trigger a 20-frame pulse
+        });
+
+        function draw() {
+            // Analog Trails
+            ctx.fillStyle = 'rgba(17, 20, 17, 0.25)';
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.shadowBlur = focusBlur ? 20 : 8;
+            ctx.shadowColor = '#4aff4a';
+            ctx.strokeStyle = '#4aff4a';
+            ctx.lineWidth = focusBlur ? 4 : 2;
+
+            ctx.beginPath();
+
+            for (let x = 0; x < width; x+=4) {
+                let y = (height / 2) - posY; 
+                let effX = x - posX;
+
+                // Wave Generation
+                if (targetWaveType === 'idle') {
+                    y += Math.sin(effX * 0.01 + time) * 80;
+                    y += Math.sin(effX * 0.03 + time * 1.5) * 20; 
+                } 
+                else if (targetWaveType === 'digital') {
+                    let s = Math.sin(effX * 0.05 + time * 5);
+                    y += (s > 0 ? 1 : -1) * 80;
+                }
+                else if (targetWaveType === 'analog') {
+                    y += ((effX * 0.05 + time * 5) % 10) * 15 - 75;
+                }
+                else if (targetWaveType === 'pcb') {
+                    y += (Math.random() - 0.5) * 150;
+                }
+
+                // Mouse Magnetic Distortion
+                const dist = Math.abs(x - mouseX);
+                if (dist < 100) {
+                    // Pull wave towards mouse Y
+                    const pullStrength = (100 - dist) / 100;
+                    y += (mouseY - y) * pullStrength * 0.3;
+                }
+
+                // Click Pulse Effect
+                if (pulseActive > 0) {
+                    if (dist < 150) {
+                        y += Math.sin(dist * 0.2) * pulseActive * 2;
+                    }
+                }
+
+                if (x===0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            
+            if (pulseActive > 0) pulseActive--;
+            time += 0.08;
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+</body>
+</html>
