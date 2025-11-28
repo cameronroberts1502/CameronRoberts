@@ -9,15 +9,16 @@
         @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap');
 
         :root {
-            --scope-bg: #111411; 
-            --trace-color: #4aff4a;
+            --scope-bg: #000000; /* Pure Black */
+            --trace-color: #4aff4a; /* The Signal Green */
             --trace-glow: rgba(74, 255, 74, 0.6);
-            --grid-color: rgba(74, 255, 74, 0.15);
+            /* CHANGED: Grid is now faint GREY, not green. This removes the tint. */
+            --grid-color: rgba(255, 255, 255, 0.08); 
             --text-color: #ccffcc;
             --crt-curvature: 12px;
         }
 
-        * { box-sizing: border-box; cursor: none; /* Hide default cursor */ }
+        * { box-sizing: border-box; cursor: none; }
 
         body {
             margin: 0;
@@ -25,7 +26,7 @@
             font-family: 'Rajdhani', sans-serif;
             color: var(--text-color);
             height: 100vh;
-            height: 100dvh; /* Dynamic height for mobile browsers */
+            height: 100dvh; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -36,7 +37,7 @@
         /* --- 2. CHASSIS --- */
         .scope-chassis {
             width: 95vw; height: 95dvh;
-            background: #1a1a1a;
+            background: #111; /* Darker chassis */
             border-radius: 20px;
             box-shadow: inset 0 0 40px #000, 0 0 20px rgba(0,0,0,0.8);
             display: flex; flex-direction: column;
@@ -50,8 +51,9 @@
             background-color: var(--scope-bg);
             border-radius: var(--crt-curvature);
             position: relative; overflow: hidden;
-            border: 4px solid #111;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+            border: 4px solid #1a1a1a;
+            /* Pure black shadow, no color */
+            box-shadow: inset 0 0 80px rgba(0,0,0,1); 
         }
 
         /* --- 4. FIXED LAYERS --- */
@@ -66,7 +68,7 @@
 
         canvas#wave-canvas {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 2; opacity: 0.8; pointer-events: none;
+            z-index: 2; opacity: 0.9; pointer-events: none;
         }
 
         /* --- 5. CURSOR FIXES --- */
@@ -94,7 +96,7 @@
             position: absolute;
             color: var(--trace-color);
             font-size: 0.9rem;
-            background: rgba(0, 20, 0, 0.9);
+            background: #000; /* Pure black label */
             padding: 4px 8px;
             pointer-events: none;
             z-index: 21;
@@ -107,7 +109,7 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             overflow-y: auto; z-index: 10;
             scrollbar-width: thin; scrollbar-color: var(--trace-color) #111;
-            -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+            -webkit-overflow-scrolling: touch;
         }
 
         .screen-content {
@@ -116,14 +118,13 @@
         }
 
         header {
-            border-bottom: 2px solid var(--grid-color);
+            /* Grey separator line instead of green */
+            border-bottom: 2px solid #333; 
             margin-bottom: 30px; padding-bottom: 15px;
             backdrop-filter: blur(2px);
         }
 
-        /* >>> MOBILE RESPONSIVE TITLE <<< */
         h1 { 
-            /* Shrinks font if screen is small, maxes out at 4rem */
             font-size: clamp(1.8rem, 6vw, 4rem); 
             margin: 0; 
             text-transform: uppercase; 
@@ -136,20 +137,20 @@
 
         .project-card {
             flex: 1; min-width: 280px;
-            background: rgba(0, 15, 0, 0.7);
-            border: 1px solid var(--trace-color);
+            background: rgba(10, 10, 10, 0.9); /* Very dark grey */
+            border: 1px solid #333; /* Subtle border */
             padding: 20px; margin-bottom: 20px;
             cursor: pointer; transition: 0.3s;
         }
         .project-card:hover {
-            background: rgba(57, 255, 20, 0.2);
-            box-shadow: 0 0 20px var(--trace-glow);
+            background: #1a1a1a;
+            border-color: var(--trace-color); /* Only light up border on hover */
+            box-shadow: 0 0 15px rgba(74, 255, 74, 0.2);
         }
         
         .project-img {
             width: 100%; height: 180px; object-fit: cover;
-            border: 1px solid var(--grid-color);
-            /* filter: grayscale(100%) sepia(100%) hue-rotate(50deg) saturate(300%) contrast(1.2); */
+            border: 1px solid #333;
         }
         
         .btn {
@@ -160,11 +161,11 @@
 
         /* --- 7. CONTROLS --- */
         .controls-bottom {
-            min-height: 80px; background: #222;
+            min-height: 80px; background: #151515;
             display: flex; align-items: center; justify-content: center; gap: 30px;
-            border-top: 2px solid #333; color: #888; font-size: 0.8rem;
+            border-top: 2px solid #333; color: #666; font-size: 0.8rem;
             padding: 10px;
-            flex-wrap: wrap; /* Allows knobs to wrap on small phones */
+            flex-wrap: wrap;
         }
         
         .knob-wrapper { text-align: center; cursor: pointer; transition: color 0.2s; }
@@ -172,14 +173,13 @@
         
         .knob {
             width: 40px; height: 40px; border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #444, #111);
-            border: 2px solid #000; margin: 5px auto;
+            background: radial-gradient(circle at 30% 30%, #444, #000);
+            border: 2px solid #111; margin: 5px auto;
             position: relative; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 5px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 5px rgba(0,0,0,0.8);
         }
         .knob::after { content: ''; position: absolute; top: 4px; left: 50%; width: 2px; height: 14px; background: #fff; transform: translateX(-50%); }
 
-        /* >>> MOBILE MEDIA QUERY <<< */
         @media (max-width: 600px) {
             .scope-chassis { padding: 10px; height: 98dvh; } 
             .screen-content { padding: 20px 15px; }
@@ -238,8 +238,8 @@
    <script>
         // --- DATA ---
         const projects = [
-            { title: "TpMania", type: "control", desc: "Guitar hero based game created for a team project course. Created on the STM32 platform", image: "Photos/TPmania.png" },
-            { title: "Loggy", type: "digital", desc: "A lab voltage, acceleration and temperature logger created for a team project course. Created on the Atmega platform", image: "Photos/Loggy.png" },
+            { title: "TpMania", type: "control", desc: "Guitar hero based game created for a team project course. Created on the STM32 platform", image: "Photos/TPmania.png", link: "tpmania.html" },
+            { title: "Loggy", type: "digital", desc: "A lab voltage, acceleration and temperature logger created for a team project course. Created on the Atmega platform", image: "Photos/Loggy.png", link: "loggy.html" },
             { title: "Synthesizer", type: "analog", desc: "555-timer based sawtooth.", image: null },
             { title: "PCB Card", type: "pcb", desc: "NFC enabled FR4 card.", image: null }
         ];
@@ -247,11 +247,19 @@
         // --- INIT PROJECTS ---
         const container = document.getElementById('projects-container');
         projects.forEach(p => {
-            const imgHTML = p.image ? `<img src="${p.image}" class="project-img">` : `<div style="height:150px; border:1px dashed var(--trace-color); display:flex; align-items:center; justify-content:center; margin:15px 0;">NO IMG</div>`;
+            const imgHTML = p.image ? `<img src="${p.image}" class="project-img">` : `<div style="height:150px; border:1px solid #333; display:flex; align-items:center; justify-content:center; margin:15px 0; color:#444;">NO IMG</div>`;
             const card = document.createElement('div');
             card.className = 'project-card';
             card.style.cursor = 'none'; 
-            card.innerHTML = `<h3>${p.title}</h3>${imgHTML}<p>${p.desc}</p><a class="btn" style="cursor: none;">View</a>`;
+            
+            const linkUrl = p.link ? p.link : '#';
+            
+            card.innerHTML = `
+                <h3>${p.title}</h3>
+                ${imgHTML}
+                <p>${p.desc}</p>
+                <a href="${linkUrl}" class="btn" style="cursor: none;">View</a>
+            `;
             
             card.addEventListener('mouseenter', () => { targetWaveType = p.type; });
             card.addEventListener('mouseleave', () => { targetWaveType = 'idle'; });
@@ -318,12 +326,10 @@
         const readout = document.getElementById('cursor-readout');
         const scrollLayer = document.querySelector('.scroll-layer');
 
-        // Added 'touchmove' support for mobile phones
         ['mousemove', 'touchmove'].forEach(evt => 
             scrollLayer.addEventListener(evt, (e) => {
                 if(!canvasRect) return;
 
-                // Handle Touch vs Mouse
                 let clientX = e.clientX;
                 let clientY = e.clientY;
                 if(e.touches && e.touches[0]) {
@@ -348,12 +354,12 @@
             }, { passive: true })
         );
 
-        // Click Interaction (Pulse)
         scrollLayer.addEventListener('mousedown', () => { pulseActive = 20; });
         scrollLayer.addEventListener('touchstart', () => { pulseActive = 20; });
 
         function draw() {
-            ctx.fillStyle = 'rgba(17, 20, 17, 0.25)';
+            // FIXED: Using pure black (0,0,0) for the fade, not greenish-black
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
             ctx.fillRect(0, 0, width, height);
 
             ctx.shadowBlur = focusBlur ? 20 : 8;
@@ -382,7 +388,6 @@
                     y += (Math.random() - 0.5) * 150;
                 }
 
-                // Mouse/Touch Magnetic Distortion
                 const dist = Math.abs(x - mouseX);
                 if (dist < 100) {
                     const pullStrength = (100 - dist) / 100;
