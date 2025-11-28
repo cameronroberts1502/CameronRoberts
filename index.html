@@ -135,11 +135,14 @@
             background: rgba(57, 255, 20, 0.2);
             box-shadow: 0 0 20px var(--trace-glow);
         }
+        
+        /* --- UPDATE HERE: Removed the green filter --- */
         .project-img {
             width: 100%; height: 180px; object-fit: cover;
             border: 1px solid var(--grid-color);
-            filter: grayscale(100%) sepia(100%) hue-rotate(50deg) saturate(300%) contrast(1.2);
+            /* filter: grayscale(100%) sepia(100%) hue-rotate(50deg) saturate(300%) contrast(1.2); */
         }
+        
         .btn {
             display: inline-block; margin-top: 10px; padding: 8px 20px;
             border: 1px solid var(--trace-color); color: var(--trace-color);
@@ -215,9 +218,10 @@
 
    <script>
         // --- DATA ---
+        // Make sure your image path is correct relative to the HTML file
         const projects = [
-            { title: "Inverted Pendulum", type: "control", desc: "PID control loop on STM32.", image: null },
-            { title: "Logic Analyzer", type: "digital", desc: "FPGA based 8-channel sniffer.", image: null },
+            { title: "TpMania", type: "control", desc: "Guitar hero based game created for a team project course. Created on the STM32 platform", image: "Photos/TPmania.png" },
+            { title: "Loggy", type: "digital", desc: "A lab voltage, acceleration and temperature logger created for a team project course. Created on the Atmega platform", image: "Photos/Loggy.png" },
             { title: "Synthesizer", type: "analog", desc: "555-timer based sawtooth.", image: null },
             { title: "PCB Card", type: "pcb", desc: "NFC enabled FR4 card.", image: null }
         ];
