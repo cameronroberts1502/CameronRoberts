@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT // TPMANIA</title>
+    <style>
+        /* --- COPY OF MAIN THEME --- */
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap');
+        :root {
+            --scope-bg: #111411; 
+            --trace-color: #4aff4a;
+            --grid-color: rgba(74, 255, 74, 0.15);
+            --text-color: #ccffcc;
+        }
+        body {
+            margin: 0; background-color: #050505; color: var(--text-color);
+            font-family: 'Rajdhani', sans-serif; display: flex; justify-content: center;
+            min-height: 100vh; padding: 20px;
+        }
+        .chassis {
+            width: 100%; max-width: 1200px; background: #1a1a1a;
+            border: 2px solid #333; border-radius: 20px; padding: 20px;
+            box-shadow: inset 0 0 40px #000; display: flex; flex-direction: column;
+        }
+        .crt-screen {
+            background: var(--scope-bg); border: 4px solid #111; border-radius: 10px;
+            flex-grow: 1; position: relative; overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+        }
+        /* Grid Background */
+        .grid-bg {
+            position: absolute; width: 100%; height: 100%;
+            background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px; pointer-events: none; z-index: 0;
+        }
+
+        /* --- CONTENT LAYOUT --- */
+        .content-scroll {
+            position: relative; z-index: 10; height: 100%; overflow-y: auto;
+            padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+        }
+
+        /* Left Column: Image */
+        .visual-feed {
+            border: 2px solid var(--trace-color); padding: 5px;
+            background: rgba(0,20,0,0.5); position: relative;
+        }
+        .visual-feed img { width: 100%; display: block; filter: grayscale(100%) sepia(100%) hue-rotate(50deg) saturate(300%) contrast(1.2); }
+        .visual-label {
+            position: absolute; bottom: 10px; left: 10px; 
+            background: #000; color: var(--trace-color); padding: 2px 5px; font-weight: bold;
+        }
+
+        /* Right Column: Data */
+        h1 { margin: 0; font-size: 3rem; text-transform: uppercase; text-shadow: 0 0 10px var(--trace-color); line-height: 1; }
+        .sys-id { font-size: 1.2rem; margin-bottom: 20px; opacity: 0.8; letter-spacing: 2px; }
+        
+        .data-block { margin-bottom: 30px; border-left: 2px solid var(--trace-color); padding-left: 15px; }
+        .data-label { font-weight: bold; text-decoration: underline; margin-bottom: 5px; display: block; }
+        
+        /* Spec Table */
+        .spec-grid { display: grid; grid-template-columns: auto 1fr; gap: 10px 20px; margin-top: 10px; font-family: monospace; }
+        .spec-key { color: #888; }
+        .spec-val { color: #fff; font-weight: bold; }
+
+        .btn-back {
+            display: inline-block; margin-top: 20px; padding: 10px 30px;
+            border: 2px solid var(--trace-color); color: var(--trace-color);
+            text-decoration: none; font-weight: bold; text-transform: uppercase;
+            transition: 0.2s; background: rgba(0,0,0,0.8);
+        }
+        .btn-back:hover { background: var(--trace-color); color: #000; }
+
+        @media(max-width: 768px) { .content-scroll { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="chassis">
+        <div class="crt-screen">
+            <div class="grid-bg"></div>
+            <div class="content-scroll">
+                
+                <div>
+                    <div class="visual-feed">
+                        <img src="Photos/TPmania.png" alt="TpMania Circuit">
+                        <div class="visual-label">CAM_01: PROTOTYPE_BENCH</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h1>TpMania</h1>
+                    <div class="sys-id">SYSTEM ID: GTR-HERO-STM32</div>
+
+                    <div class="data-block">
+                        <span class="data-label">PROJECT BRIEF</span>
+                        <p>A rhythm-based embedded game system inspired by Guitar Hero. The system processes user inputs in real-time to match scrolling notes displayed on an LCD, requiring precise timing and interrupt handling.</p>
+                    </div>
+
+                    <div class="data-block">
+                        <span class="data-label">TECHNICAL SPECIFICATIONS</span>
+                        <div class="spec-grid">
+                            <span class="spec-key">MCU:</span> <span class="spec-val">STM32 (ARM Cortex-M)</span>
+                            <span class="spec-key">LANGUAGE:</span> <span class="spec-val">C / C++ / Assembly</span>
+                            <span class="spec-key">DISPLAY:</span> <span class="spec-val">SPI TFT LCD Module</span>
+                            <span class="spec-key">INPUT:</span> <span class="spec-val">4x Tactile Buttons (GPIO IRQ)</span>
+                            <span class="spec-key">PROTOCOL:</span> <span class="spec-val">SPI, I2C, UART</span>
+                        </div>
+                    </div>
+
+                    <div class="data-block">
+                        <span class="data-label">ENGINEERING CHALLENGES</span>
+                        <p>The main challenge was managing screen refresh rates while handling button interrupts. Using <strong>Direct Memory Access (DMA)</strong> for the display buffer allowed the CPU to focus on game logic and audio timing without visual tearing.</p>
+                    </div>
+
+                    <a href="index.html" class="btn-back"><< RETURN_MAIN</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
