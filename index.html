@@ -400,7 +400,7 @@
 
 <main>
   <!-- FLIGHT DECK / ORBITAL MAP -->
-  <section class="stage" id="stage" aria-label="CAMERON ROBERTS">
+  <section class="stage" id="stage" aria-label="FLIGHT DECK">
     <canvas id="orbits"></canvas>
 
     <button class="core" id="core" aria-label="Cameron Roberts command core">
@@ -413,7 +413,7 @@
     <!-- craft injected by JS -->
 
     <div class="hero-overlay">
-      <h1>FLIGHT <span class="o">DECK</span></h1>
+      <h1>CAMERON <span class="o">ROBERTS</span></h1>
       <p>4 craft in orbit &middot; select a target to dock</p>
     </div>
     <div class="hint">◦ click a craft to initiate docking ◦ press ` for console ◦</div>
@@ -1022,7 +1022,7 @@
   $$('[data-edit]').forEach(a=>a.addEventListener('click',e=>{ if(a.getAttribute('href')==='#'){ e.preventDefault(); toast('EDIT LINK IN SOURCE → search "data-edit"'); } }));
 
   // clock
-  function tick(){ const d=new Date(); const p=n=>String(n).padStart(2,'0'); $('#clk').textContent=p(d.getUTCHours())+':'+p(d.getUTCMinutes())+':'+p(d.getUTCSeconds())+' UTC'; }
+function tick(){ const d=new Date(); const p=n=>String(n).padStart(2,'0'); const t=new Date(d.toLocaleString('en-AU',{timeZone:'Australia/Brisbane'})); $('#clk').textContent=p(t.getHours())+':'+p(t.getMinutes())+':'+p(t.getSeconds())+' AEST'; }
   setInterval(tick,1000); tick();
   $('#yr').textContent=new Date().getFullYear();
 
