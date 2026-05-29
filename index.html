@@ -300,6 +300,25 @@
   .d-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
   .d-links a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line-bright);padding:11px 18px;color:var(--txt);transition:.2s}
   .d-links a:hover{border-color:var(--amber);color:var(--amber);background:rgba(255,122,51,.06)}
+  /* gallery */
+  .d-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:14px}
+  .g-item{position:relative;aspect-ratio:4/3;border:1px solid var(--line);border-radius:2px;overflow:hidden;cursor:zoom-in;transition:border-color .2s,transform .2s;background:#060810}
+  .g-item:hover{border-color:var(--amber);transform:scale(1.02)}
+  .g-item img,.g-item video{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.9);transition:filter .2s}
+  .g-item:hover img,.g-item:hover video{filter:brightness(1)}
+  .g-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+  .g-play span{width:44px;height:44px;border-radius:50%;background:rgba(255,122,51,.85);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 24px rgba(255,122,51,.5)}
+  /* lightbox */
+  #glb{display:none;position:fixed;inset:0;z-index:9500;background:rgba(4,5,10,.96);align-items:center;justify-content:center;cursor:zoom-out;flex-direction:column}
+  #glb.on{display:flex}
+  #glb-media{max-width:92vw;max-height:82vh;object-fit:contain;border:1px solid var(--line-bright);box-shadow:0 0 60px rgba(0,0,0,.8);cursor:default}
+  #glb-media.vid{border:none;box-shadow:none;background:#000}
+  #glb iframe{width:min(900px,90vw);height:min(506px,50vw);border:1px solid var(--line-bright);cursor:default}
+  #glb-nav{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:16px;z-index:9501}
+  #glb-nav button{font-family:var(--mono);font-size:12px;letter-spacing:.12em;background:rgba(255,122,51,.12);border:1px solid var(--amber);color:var(--amber);padding:8px 18px;cursor:pointer;transition:.2s}
+  #glb-nav button:hover{background:rgba(255,122,51,.25)}
+  #glb-close{position:fixed;top:20px;right:24px;font-family:var(--mono);font-size:13px;letter-spacing:.15em;background:none;border:1px solid var(--line-bright);color:var(--txt);padding:7px 14px;cursor:pointer;z-index:9502;transition:.2s}
+  #glb-close:hover{border-color:var(--amber);color:var(--amber)}
   .telemetry{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.08em;border-left:2px solid var(--ice-dim);padding:4px 0 4px 14px;margin-top:18px;line-height:1.9}
   .telemetry b{color:var(--ice)}
 
@@ -400,7 +419,7 @@
 
 <main>
   <!-- FLIGHT DECK / ORBITAL MAP -->
-  <section class="stage" id="stage" aria-label="FLIGHT DECK">
+  <section class="stage" id="stage" aria-label="Flight deck">
     <canvas id="orbits"></canvas>
 
     <button class="core" id="core" aria-label="Cameron Roberts command core">
@@ -413,7 +432,7 @@
     <!-- craft injected by JS -->
 
     <div class="hero-overlay">
-      <h1>CAMERON <span class="o">ROBERTS</span></h1>
+      <h1>FLIGHT <span class="o">DECK</span></h1>
       <p>4 craft in orbit &middot; select a target to dock</p>
     </div>
     <div class="hint">◦ click a craft to initiate docking ◦ press ` for console ◦</div>
@@ -468,8 +487,8 @@
     </p>
     <div class="downlink">
       <a class="link-tile" id="lk-email" href="mailto:cameron.roberts1502@gmail.com"><div class="k">Primary // Email</div><div class="v">cameron.roberts1502@gmail.com</div><div class="arrow">↗</div></a>
-      <a class="link-tile" id="lk-li" href="https://www.linkedin.com/in/cameron-roberts-b2ba00300/" data-edit><div class="k">Network // LinkedIn</div><div class="v">/in/cameron-roberts</div><div class="arrow">↗</div></a>
-      <a class="link-tile" id="lk-gh" href="https://github.com/cameronroberts1502" data-edit><div class="k">Source // GitHub</div><div class="v">@cameronroberts1502</div><div class="arrow">↗</div></a>
+      <a class="link-tile" id="lk-li" href="https://www.linkedin.com/in/cameron-roberts-b2ba00300/"><div class="k">Network // LinkedIn</div><div class="v">/in/cameron-roberts</div><div class="arrow">↗</div></a>
+      <a class="link-tile" id="lk-gh" href="https://github.com/cameronroberts1502"><div class="k">Source // GitHub</div><div class="v">@cameronroberts1502</div><div class="arrow">↗</div></a>
       <a class="link-tile" href="https://cameronroberts.me"><div class="k">Beacon // Site</div><div class="v">cameronroberts.me</div><div class="arrow">↗</div></a>
     </div>
   </section>
@@ -505,6 +524,7 @@
 <!-- REticle + toast -->
 <div id="reticle"><span class="ring"></span></div>
 <div id="toast"></div>
+<div id="glb" role="dialog" aria-modal="true" aria-label="Media lightbox"><div id="glb-inner"></div><button id="glb-close" aria-label="Close lightbox">CLOSE &#x2715;</button><div id="glb-nav"><button id="glb-prev">&#9664; PREV</button><button id="glb-next">NEXT &#9654;</button></div></div>
 
 <script>
 "use strict";
@@ -530,6 +550,7 @@
       title:'A.S.T.R.A.', sub:'Autonomous System for Tracking, Rendezvous & Alignment',
       orbit:{rx:0.40, ry:0.27, a:Math.PI*0.15, speed:0.00022},
       badges:['Solo build','Vision-guided','BLE','Real-time C'],
+      images:['Photos/Subject.png', 'Photos/GUI_ASTRA.png', 'Photos/ASTRA.png', 'Photos/IMG_4464.mov'],
       blurb:[
         "<b>A.S.T.R.A. is an automated docking system</b> — a vehicle that finds a target, lines itself up, and closes the gap on its own. It's the project that gave this whole site its metaphor: every time you dock with a craft here, you're flying a tribute to it.",
         "A pan-and-tilt camera platform locks onto a fiducial target, estimates its relative pose, and drives a closed-loop alignment maneuver until capture — the same rendezvous problem real spacecraft solve, scaled to the bench."
@@ -549,6 +570,7 @@
       title:'TPMania', sub:'Custom hardware rhythm game',
       orbit:{rx:0.30, ry:0.20, a:Math.PI*1.1, speed:-0.00031},
       badges:['Team project','STM32','LED matrix','Arcade I/O'],
+      images:['Photos/TPmania.png'],
       blurb:[
         "<b>TPMania is a rhythm game built from scratch in silicon and code</b> — a full arcade-style experience running on hardware we designed and assembled ourselves rather than on a screen.",
         "Players hit illuminated buttons in time with patterns rendered across an LED matrix, with the whole experience orchestrated by an STM32 reading inputs and driving the lights in real time."
@@ -568,6 +590,7 @@
       title:'LoggyBoard', sub:'Multi-channel data acquisition & logging',
       orbit:{rx:0.46, ry:0.32, a:Math.PI*0.72, speed:0.00018},
       badges:['Team project','ATmega328P','Custom GUI','Sensors'],
+      images:['Photos/Loggy.png'],
       blurb:[
         "<b>LoggyBoard is a bench data-acquisition system</b> that captures the things you actually need when characterising a circuit or a moving rig: <b>voltage, temperature and acceleration</b>, streamed live into a custom interface.",
         "It turns raw analog reality into clean, plottable data — the unglamorous backbone that makes every other experiment trustworthy."
@@ -587,6 +610,7 @@
       title:'PCB Business Card', sub:'A circuit board you can hand someone',
       orbit:{rx:0.34, ry:0.235, a:Math.PI*1.62, speed:-0.00026},
       badges:['Solo build','RF / antenna','NFC','PCB art'],
+      images:[ /* add your image paths here, e.g. 'assets/card/front.jpg' */ ],
       blurb:[
         "<b>A business card that's also a working circuit board.</b> Hand it over, tap it to a phone, and it talks back — an RF antenna and NFC chip etched right into the copper.",
         "It's equal parts portfolio piece and party trick: proof that I can design RF on a board people will literally carry in their wallet."
@@ -846,6 +870,8 @@
   ===================================================================== */
   const detail=$('#detail'), dwrap=$('#detailwrap');
   let lastFocus=null;
+  function mediaType(src){ if(/youtu(be\.com|\.be)/i.test(src)) return 'youtube'; if(/\.(mp4|webm|mov|ogg)$/i.test(src)) return 'video'; return 'image'; }
+  function ytId(src){ const m=src.match(/(?:v=|youtu\.be\/)([\w-]{11})/); return m?m[1]:''; }
   function openDetail(p){
     lastFocus=document.activeElement;
     dwrap.innerHTML =
@@ -860,9 +886,9 @@
         '</div></div>'+
       '<div class="d-section"><h3>Flight Notes</h3><p style="color:#cad2de;line-height:1.9;font-weight:300">'+p.how+'</p></div>'+
       '<div class="d-section"><h3>Mission Highlights</h3><ul class="hl">'+p.highlights.map(h=>'<li>'+h+'</li>').join('')+'</ul></div>'+
+      (p.images&&p.images.length?'<div class="d-section"><h3>Visual Log</h3><div class="d-gallery">'+p.images.map((src,i)=>{ const t=mediaType(src); const thumb=t==='youtube'?'<img src="https://img.youtube.com/vi/'+ytId(src)+'/hqdefault.jpg" alt="'+p.title+' video thumbnail" loading="lazy">':t==='video'?'<video src="'+src+'" preload="metadata" muted playsinline></video>':'<img src="'+src+'" alt="'+p.title+' image '+(i+1)+'" loading="lazy">'; const play=t!=='image'?'<div class="g-play"><span>▶</span></div>':''; return '<div class="g-item" data-gi="'+i+'" tabindex="0" role="button" aria-label="Open media '+(i+1)+'">'+thumb+play+'</div>'; }).join('')+'</div></div>':'')+
       '<div class="d-links">'+
         '<a href="#" data-edit>VIEW SOURCE ↗</a>'+
-        '<a href="#" data-edit>GALLERY ↗</a>'+
         '<a href="#" id="nextcraft">NEXT CRAFT →</a>'+
       '</div>';
     detail.classList.add('on'); detail.setAttribute('aria-hidden','false');
@@ -871,6 +897,34 @@
     const idx=PROJECTS.indexOf(p);
     const nx=$('#nextcraft');
     nx.addEventListener('click',e=>{e.preventDefault(); closeDetail(); setTimeout(()=>startDock(PROJECTS[(idx+1)%PROJECTS.length]),300);});
+    if(p.images&&p.images.length){
+      let gi=0;
+      const glb=$('#glb'),inner=$('#glb-inner');
+      function mediaType(src){ if(/youtu(be\.com|\.be)/i.test(src)) return 'youtube'; if(/\.(mp4|webm|mov|ogg)$/i.test(src)) return 'video'; return 'image'; }
+      function ytId(src){ const m=src.match(/(?:v=|youtu\.be\/)([\w-]{11})/); return m?m[1]:''; }
+      function setGlb(src){
+        inner.innerHTML='';
+        const t=mediaType(src);
+        if(t==='youtube'){
+          const f=document.createElement('iframe'); f.src='https://www.youtube.com/embed/'+ytId(src)+'?autoplay=1'; f.allow='autoplay;fullscreen'; f.allowFullscreen=true; inner.appendChild(f);
+        } else if(t==='video'){
+          const v=document.createElement('video'); v.src=src; v.controls=true; v.autoplay=true; v.id='glb-media'; v.className='vid'; inner.appendChild(v);
+        } else {
+          const img=document.createElement('img'); img.src=src; img.id='glb-media'; img.alt=''; inner.appendChild(img);
+        }
+      }
+      function openGlb(i){ gi=i; setGlb(p.images[gi]); glb.classList.add('on'); }
+      function closeGlb(){ inner.innerHTML=''; glb.classList.remove('on'); }
+      dwrap.querySelectorAll('.g-item').forEach(function(el){
+        function go(e){ e.stopPropagation(); openGlb(+el.dataset.gi); }
+        el.addEventListener('click',go);
+        el.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(e); } });
+      });
+      $('#glb-close').onclick=closeGlb;
+      glb.onclick=function(e){ if(e.target===glb) closeGlb(); };
+      $('#glb-prev').onclick=function(e){ e.stopPropagation(); gi=(gi-1+p.images.length)%p.images.length; setGlb(p.images[gi]); };
+      $('#glb-next').onclick=function(e){ e.stopPropagation(); gi=(gi+1)%p.images.length; setGlb(p.images[gi]); };
+    }
   }
   function closeDetail(){
     detail.classList.remove('on'); detail.setAttribute('aria-hidden','true');
@@ -963,7 +1017,7 @@
   window.addEventListener('keydown',e=>{
     // console toggle
     if((e.key==='`'||e.key==='~') && !termOpen && document.activeElement!==tin){ e.preventDefault(); openTerm(); return; }
-    if(e.key==='Escape'){ if(detail.classList.contains('on'))closeDetail(); else if(termOpen)closeTerm(); return; }
+    if(e.key==='Escape'){ const glb=$('#glb'); if(glb&&glb.classList.contains('on')){ glb.classList.remove('on'); return; } if(detail.classList.contains('on'))closeDetail(); else if(termOpen)closeTerm(); return; }
     if(termOpen) return;
     kbuf.push(e.key); if(kbuf.length>KON.length) kbuf.shift();
     if(KON.every((k,i)=>kbuf[i] && kbuf[i].toLowerCase()===k.toLowerCase())){
@@ -1022,7 +1076,7 @@
   $$('[data-edit]').forEach(a=>a.addEventListener('click',e=>{ if(a.getAttribute('href')==='#'){ e.preventDefault(); toast('EDIT LINK IN SOURCE → search "data-edit"'); } }));
 
   // clock
-function tick(){ const d=new Date(); const p=n=>String(n).padStart(2,'0'); const t=new Date(d.toLocaleString('en-AU',{timeZone:'Australia/Brisbane'})); $('#clk').textContent=p(t.getHours())+':'+p(t.getMinutes())+':'+p(t.getSeconds())+' AEST'; }
+  function tick(){ const d=new Date(); const p=n=>String(n).padStart(2,'0'); $('#clk').textContent=p(d.getUTCHours())+':'+p(d.getUTCMinutes())+':'+p(d.getUTCSeconds())+' UTC'; }
   setInterval(tick,1000); tick();
   $('#yr').textContent=new Date().getFullYear();
 
