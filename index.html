@@ -53,6 +53,12 @@ if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){document.docum
 <main id="main-content" tabindex="-1">
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="hero" aria-labelledby="hero-title">
+    <!-- decorative 3D board (Three.js); purely visual, hidden from AT -->
+    <div class="hero__stage" aria-hidden="true">
+      <canvas id="board-canvas"></canvas>
+    </div>
+    <div class="hero__veil" aria-hidden="true"></div>
+
     <div class="hero__sheet" aria-hidden="true">
       <span class="sheet-line">Sheet 01 / 04</span>
       <span class="sheet-line">Rev. 2026</span>
@@ -60,9 +66,9 @@ if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){document.docum
 
     <div class="hero__inner">
       <p class="eyebrow" data-reveal>Electrical &amp; Computer Engineer · Brisbane</p>
-      <h1 class="hero__title" id="hero-title" data-reveal>
-        <span class="line">Cameron</span>
-        <span class="line">Roberts</span>
+      <h1 class="hero__title" id="hero-title">
+        <span class="mask"><span class="line">Cameron</span></span>
+        <span class="mask"><span class="line">Roberts</span></span>
       </h1>
       <p class="hero__lede" data-reveal>
         I design hardware end to end — schematic capture, multi-layer PCB layout,
@@ -111,15 +117,17 @@ if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){document.docum
           <article class="entry__card" aria-labelledby="astra-t">
             <div class="entry__media">
               <figure>
-                <img src="Photos/Subject.png" alt="The A.S.T.R.A. pan-and-tilt camera platform aligned with its fiducial docking target on a workbench." loading="lazy" decoding="async" />
+                <img src="Photos/GUI_ASTRA.png" alt="A.S.T.R.A. mission-control interface: range-to-target, link quality, closing velocity and live pitch, yaw and roll readouts." loading="lazy" decoding="async" />
               </figure>
-              <div class="entry__thumbs">
-                <img src="Photos/GUI_ASTRA.png" alt="A.S.T.R.A. control GUI showing the tracked marker and live pose estimate." loading="lazy" decoding="async" />
-                <img src="Photos/ASTRA.png" alt="Close-up of the A.S.T.R.A. hardware: camera, servos and controller boards." loading="lazy" decoding="async" />
-              </div>
+              <figure class="entry__video">
+                <video controls muted playsinline preload="metadata" poster="Photos/ASTRA.png"
+                       aria-label="Video of the A.S.T.R.A. platform tracking its docking target.">
+                  <source src="Photos/IMG_4464.mp4" type="video/mp4" />
+                </video>
+              </figure>
             </div>
             <div class="entry__body">
-              <p class="entry__ref"><span>PYLD-04</span><span class="tag tag--solo">Solo build</span></p>
+              <p class="entry__ref"><span>PYLD-04</span><span class="tag">Team · 2</span></p>
               <h3 class="entry__title" id="astra-t">A.S.T.R.A.</h3>
               <p class="entry__sub">Autonomous System for Tracking, Rendezvous &amp; Alignment</p>
               <p class="entry__lede">
@@ -140,7 +148,7 @@ if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){document.docum
                 <li>Closed-loop visual servoing: detect marker, estimate pose, correct, converge.</li>
                 <li>Wireless BLE command and telemetry between distributed microcontroller nodes.</li>
                 <li>Hand-tuned control loop built for deterministic, low-latency response.</li>
-                <li>Owned end to end — mechanics, electronics, vision and firmware.</li>
+                <li>A two-person build spanning mechanics, electronics, vision and firmware.</li>
               </ul>
             </div>
           </article>
@@ -380,7 +388,15 @@ if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){document.docum
 <!-- Animation libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="assets/js/scene.js"></script>
 <script src="assets/js/main.js" defer></script>
 </body>
 </html>
