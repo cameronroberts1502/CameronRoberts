@@ -3,400 +3,281 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Cameron Roberts — Electrical &amp; Computer Engineer</title>
-<meta name="description" content="Cameron Roberts is an electrical and computer engineer in Brisbane who designs hardware end to end — schematic, PCB, firmware, and the software that makes it usable." />
-<meta name="theme-color" content="#0F141A" />
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-
-<!-- Social -->
+<title>Cameron Roberts — Portfolio</title>
+<meta name="description" content="Cameron Roberts. Electrical and computer engineer in Brisbane. Hardware end to end: schematic, PCB, firmware, and the software that makes it usable." />
+<meta name="theme-color" content="#0b0b0b" />
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Cameron Roberts — Electrical & Computer Engineer" />
-<meta property="og:description" content="Hardware designed end to end: schematic, PCB layout, firmware, and the interfaces that make it usable." />
+<meta property="og:title" content="Cameron Roberts — Portfolio" />
+<meta property="og:description" content="Electrical and computer engineer. Hardware end to end." />
 <meta property="og:image" content="https://cameronroberts.me/Photos/card.png" />
 <meta property="og:url" content="https://cameronroberts.me" />
 <meta name="twitter:card" content="summary_large_image" />
-
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/css/main.css" />
-<script>/* hide-for-reveal only when motion is allowed — avoids invisible content + flash */
-if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){document.documentElement.classList.add('js');}</script>
+<script>if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){document.documentElement.classList.add('js');}</script>
 </head>
 <body>
 
-<a class="skip-link" href="#main-content">Skip to content</a>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<!-- fixed drafting grid + corner registration marks -->
-<div class="grid-bg" aria-hidden="true"></div>
-<div class="frame" aria-hidden="true">
-  <span class="reg reg-tl"></span><span class="reg reg-tr"></span>
-  <span class="reg reg-bl"></span><span class="reg reg-br"></span>
+<!-- GLITCH LOADER -->
+<div class="loader" id="loader" aria-hidden="true">
+  <img class="loader__logo" src="assets/img/logo.svg" alt="" />
+  <div class="loader__name" data-text="Cameron Roberts">Cameron Roberts</div>
+  <div class="loader__line mono">Receiving signal</div>
+  <div class="loader__scan" aria-hidden="true"></div>
 </div>
 
-<header class="topbar" id="top">
-  <a class="wordmark" href="#top" aria-label="Cameron Roberts — home">
-    <span class="wordmark__mark">CR</span>
-    <span class="wordmark__name">Cameron Roberts</span>
-  </a>
+<!-- ============================ MASTHEAD ============================ -->
+<header>
   <nav class="nav" aria-label="Primary">
-    <a href="#work">Work</a>
-    <a href="#profile">Profile</a>
-    <a href="#systems">Capabilities</a>
-    <a href="#contact">Contact</a>
+    <a class="brand" href="#main"><img src="assets/img/logo.svg" alt="Cameron Roberts" /></a>
+    <div class="nav__links">
+      <a href="#work">Work</a><a href="#profile">Profile</a><a href="#systems">Systems</a><a href="#contact">Contact</a>
+    </div>
   </nav>
-  <a class="nav__status" href="#contact">
-    <span class="dot" aria-hidden="true"></span>Open to roles
-  </a>
+
+  <section class="masthead" aria-labelledby="mh-h1">
+    <h1 id="mh-h1" class="vh">Cameron Roberts, electrical and computer engineer in Brisbane.</h1>
+
+    <div class="collage" aria-hidden="true">
+      <figure class="c1"><img src="assets/img/aldrin.jpg" alt="" loading="eager" /></figure>
+      <figure class="c2"><img src="assets/img/jet1.jpg" alt="" loading="eager" /></figure>
+      <figure class="c3"><img src="assets/img/space1.jpg" alt="" loading="eager" /></figure>
+      <figure class="c4"><img src="assets/img/moto3.jpg" alt="" loading="lazy" /></figure>
+      <figure class="c5"><img src="assets/img/moto1.jpg" alt="" loading="lazy" /></figure>
+      <div class="blend"><span>Cameron</span><span>Roberts</span><span>Cameron</span></div>
+    </div>
+
+    <div class="introbar">
+      <span class="brace" aria-hidden="true">{</span>
+      <div class="mh__info">
+        <div class="mh__kicker"><span class="star" aria-hidden="true">✳</span><span class="mono">Portfolio / 2026</span></div>
+        <p class="mh__role">Electrical &amp; Computer Engineer · Brisbane</p>
+        <p class="mh__intro">I build hardware end to end: schematic capture, PCB layout, embedded firmware, and the software that makes a board usable. Into Apollo, my E46, and anything analog.</p>
+        <div class="mh__cta">
+          <a class="pill pill--solid" href="#work">See the work<span class="pill__arrow" aria-hidden="true">↗</span></a>
+          <a class="pill" href="#contact">Get in touch<span class="pill__arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
 </header>
 
-<main id="main-content" tabindex="-1">
-  <!-- ===================== HERO ===================== -->
-  <section class="hero" id="hero" aria-labelledby="hero-title">
-    <!-- decorative 3D board (Three.js); purely visual, hidden from AT -->
-    <div class="hero__stage" aria-hidden="true">
-      <canvas id="board-canvas"></canvas>
-    </div>
-    <div class="hero__veil" aria-hidden="true"></div>
-
-    <div class="hero__sheet" aria-hidden="true">
-      <span class="sheet-line">Sheet 01 / 04</span>
-      <span class="sheet-line">Rev. 2026</span>
-    </div>
-
-    <div class="hero__inner">
-      <p class="eyebrow" data-reveal>Electrical &amp; Computer Engineer · Brisbane</p>
-      <h1 class="hero__title" id="hero-title">
-        <span class="mask"><span class="line">Cameron</span></span>
-        <span class="mask"><span class="line">Roberts</span></span>
-      </h1>
-      <p class="hero__lede" data-reveal>
-        I design hardware end to end — schematic capture, multi-layer PCB layout,
-        embedded firmware, and the software that makes a board legible to a human.
-        Currently a fourth-year Electrical &amp; Computer Engineering student at UQ,
-        pulled toward space, defence, and motorsport.
-      </p>
-      <div class="hero__actions" data-reveal>
-        <a class="btn btn--primary" href="#work">See the work</a>
-        <a class="btn btn--ghost" href="#contact">Get in touch</a>
-      </div>
-    </div>
-
-    <div class="hero__meta" aria-hidden="true">
-      <span>BE / ME · Year 4</span>
-      <span>University of Queensland</span>
-      <span class="hero__scroll">Scroll</span>
-    </div>
-  </section>
-
-  <!-- ===================== WORK / SCHEMATIC ===================== -->
-  <section class="work" id="work" aria-labelledby="work-title">
-    <div class="container">
-      <header class="section-head" data-reveal>
-        <p class="label">Selected work</p>
-        <h2 class="section-head__title" id="work-title">Four systems, designed and built.</h2>
-        <p class="section-head__note">
-          Each block is a project. Follow a trace to read the detail — or scroll on.
-        </p>
+<main id="main">
+  <!-- ============================ WORK ============================ -->
+  <section class="sec" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <header class="sec__head" data-reveal>
+        <span class="sec__num" aria-hidden="true">01</span>
+        <h2 class="sec__title glitch" id="work-title" data-text="The Builds">The Builds</h2>
+        <p class="sec__sub">Four projects. Open one to read the detail.</p>
       </header>
-
-      <!-- Interactive schematic (enhanced by JS; falls back to the index below) -->
-      <div class="schematic" id="schematic" data-reveal hidden>
-        <svg class="schematic__wires" aria-hidden="true" focusable="false"></svg>
-        <button class="node node--core" type="button" disabled aria-hidden="true">
-          <span class="node__mark">CR·01</span>
-          <span class="node__sub">control core</span>
+      <div class="grid-work">
+        <button class="card" type="button" data-dialog="dlg-astra" aria-haspopup="dialog" data-reveal>
+          <span class="shot"><img src="Photos/GUI_ASTRA.png" alt="" loading="lazy" /></span>
+          <span class="card__meta"><span class="card__name"><b aria-hidden="true">01</b>A.S.T.R.A.</span><span class="card__tag">Team · 2</span></span>
+          <span class="card__view">View details <span aria-hidden="true">↗</span></span>
         </button>
-        <!-- module buttons injected here -->
-      </div>
-
-      <!-- Project entries: canonical content, always present -->
-      <ol class="index" id="index" aria-label="Project index">
-        <!-- ASTRA -->
-        <li class="entry" id="astra">
-          <article class="entry__card" aria-labelledby="astra-t">
-            <div class="entry__media">
-              <figure>
-                <img src="Photos/GUI_ASTRA.png" alt="A.S.T.R.A. mission-control interface: range-to-target, link quality, closing velocity and live pitch, yaw and roll readouts." loading="lazy" decoding="async" />
-              </figure>
-              <figure class="entry__video">
-                <video controls muted playsinline preload="metadata" poster="Photos/ASTRA.png"
-                       aria-label="Video of the A.S.T.R.A. platform tracking its docking target.">
-                  <source src="Photos/IMG_4464.mp4" type="video/mp4" />
-                </video>
-              </figure>
-            </div>
-            <div class="entry__body">
-              <p class="entry__ref"><span>PYLD-04</span><span class="tag">Team · 2</span></p>
-              <h3 class="entry__title" id="astra-t">A.S.T.R.A.</h3>
-              <p class="entry__sub">Autonomous System for Tracking, Rendezvous &amp; Alignment</p>
-              <p class="entry__lede">
-                A vehicle that finds a target, lines itself up, and closes the gap on its
-                own. A pan-and-tilt camera locks onto a fiducial marker, estimates its
-                relative pose, and drives a closed-loop alignment until capture — the
-                rendezvous problem real spacecraft solve, scaled to the bench. It's also
-                where this site's metaphor comes from.
-              </p>
-              <dl class="spec">
-                <div><dt>Controller</dt><dd>Seeed XIAO nRF52840 Sense</dd></div>
-                <div><dt>Vision</dt><dd>ESP32-CAM · ArUco markers</dd></div>
-                <div><dt>Actuation</dt><dd>Pan / tilt servos</dd></div>
-                <div><dt>Link</dt><dd>Bluetooth Low Energy</dd></div>
-                <div><dt>Firmware</dt><dd>C, tuned for low latency</dd></div>
-              </dl>
-              <ul class="points">
-                <li>Closed-loop visual servoing: detect marker, estimate pose, correct, converge.</li>
-                <li>Wireless BLE command and telemetry between distributed microcontroller nodes.</li>
-                <li>Hand-tuned control loop built for deterministic, low-latency response.</li>
-                <li>A two-person build spanning mechanics, electronics, vision and firmware.</li>
-              </ul>
-            </div>
-          </article>
-        </li>
-
-        <!-- TPMania -->
-        <li class="entry" id="tpmania">
-          <article class="entry__card" aria-labelledby="tpmania-t">
-            <div class="entry__media">
-              <figure>
-                <img src="Photos/TPmania.png" alt="TPMania arcade rhythm game: custom PCB with an LED matrix and illuminated arcade buttons." loading="lazy" decoding="async" />
-              </figure>
-            </div>
-            <div class="entry__body">
-              <p class="entry__ref"><span>PYLD-03</span><span class="tag">Team</span></p>
-              <h3 class="entry__title" id="tpmania-t">TPMania</h3>
-              <p class="entry__sub">A hardware rhythm game built from scratch</p>
-              <p class="entry__lede">
-                An arcade-style rhythm game that runs on hardware we designed and
-                assembled, not on a screen. Players hit illuminated buttons in time with
-                patterns rendered across an LED matrix, all orchestrated by an STM32
-                reading input and driving the lights in real time.
-              </p>
-              <dl class="spec">
-                <div><dt>Controller</dt><dd>STM32</dd></div>
-                <div><dt>Display</dt><dd>LED matrix</dd></div>
-                <div><dt>Input</dt><dd>Illuminated arcade buttons</dd></div>
-                <div><dt>Board</dt><dd>Custom PCB</dd></div>
-              </dl>
-              <ul class="points">
-                <li>One custom board integrating the MCU, matrix driving and button I/O.</li>
-                <li>Real-time input scanning and beat sync under a tight timing budget.</li>
-                <li>Hardware, firmware and gameplay split across the team.</li>
-              </ul>
-            </div>
-          </article>
-        </li>
-
-        <!-- LoggyBoard -->
-        <li class="entry" id="loggy">
-          <article class="entry__card" aria-labelledby="loggy-t">
-            <div class="entry__media">
-              <figure>
-                <img src="Photos/Loggy.png" alt="LoggyBoard data-acquisition PCB with voltage, temperature and acceleration sensors." loading="lazy" decoding="async" />
-              </figure>
-            </div>
-            <div class="entry__body">
-              <p class="entry__ref"><span>PYLD-02</span><span class="tag">Team</span></p>
-              <h3 class="entry__title" id="loggy-t">LoggyBoard</h3>
-              <p class="entry__sub">Multi-channel data acquisition and logging</p>
-              <p class="entry__lede">
-                A bench instrument that captures what you actually need when
-                characterising a circuit or a moving rig — voltage, temperature and
-                acceleration — and streams it live into a custom interface for plotting
-                and capture. The unglamorous backbone that makes other experiments
-                trustworthy.
-              </p>
-              <dl class="spec">
-                <div><dt>Controller</dt><dd>ATmega328P</dd></div>
-                <div><dt>Channels</dt><dd>Voltage · Temp · Accel</dd></div>
-                <div><dt>Board</dt><dd>Custom PCB</dd></div>
-                <div><dt>Interface</dt><dd>Custom desktop GUI</dd></div>
-              </dl>
-              <ul class="points">
-                <li>Custom board and firmware sampling three sensor domains at once.</li>
-                <li>Live streaming to a bespoke GUI for real-time plotting and capture.</li>
-                <li>Reliable framing so logged data stays clean and analysable.</li>
-              </ul>
-            </div>
-          </article>
-        </li>
-
-        <!-- PCB Business Card -->
-        <li class="entry" id="card">
-          <article class="entry__card" aria-labelledby="card-t">
-            <div class="entry__media">
-              <figure>
-                <img src="Photos/card.png" alt="A PCB business card with an NFC trace antenna etched into the copper." loading="lazy" decoding="async" />
-              </figure>
-            </div>
-            <div class="entry__body">
-              <p class="entry__ref"><span>PYLD-01</span><span class="tag tag--solo">Solo build</span></p>
-              <h3 class="entry__title" id="card-t">PCB Business Card</h3>
-              <p class="entry__sub">A circuit board you can hand someone</p>
-              <p class="entry__lede">
-                A business card that's also a working circuit board. Hand it over, tap it
-                to a phone, and it talks back — an antenna and NFC chip laid straight into
-                the copper. No battery, no app: just tuned RF and a layout that doubles as
-                the card's identity.
-              </p>
-              <dl class="spec">
-                <div><dt>Board</dt><dd>Custom PCB</dd></div>
-                <div><dt>RF</dt><dd>Trace antenna</dd></div>
-                <div><dt>Chip</dt><dd>NFC</dd></div>
-                <div><dt>Power</dt><dd>Passive / harvested</dd></div>
-              </dl>
-              <ul class="points">
-                <li>Antenna designed directly into the copper — RF layout that has to work.</li>
-                <li>Passive tap-to-share with no battery or app.</li>
-                <li>Layout doubles as graphic identity — engineering as a calling card.</li>
-              </ul>
-            </div>
-          </article>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- ===================== PROFILE ===================== -->
-  <section class="profile" id="profile" aria-labelledby="profile-title">
-    <div class="container profile__grid">
-      <div class="profile__text">
-        <p class="label" data-reveal>Profile</p>
-        <h2 class="section-head__title" id="profile-title" data-reveal>The person behind the boards.</h2>
-        <p data-reveal>
-          I'm a fourth-year Bachelor / Master of Electrical &amp; Computer Engineering
-          student at the University of Queensland. I like the part where firmware meets
-          fabrication: copper traces, control loops, and the moment a board you laid out
-          yourself boots for the first time.
-        </p>
-        <p data-reveal>
-          My interests run toward space, defence, and motorsport — fields where the
-          engineering has to be both ambitious and unforgiving. That's the bar I hold my
-          own work to: build hard things, make them reliable, and make them clear to use.
-        </p>
-        <p data-reveal>
-          Most of what's here I designed end to end — schematic, layout, firmware, and the
-          interface that makes the hardware usable. I'm drawn to the full stack of a
-          physical product, from the first net to the last detail.
-        </p>
-      </div>
-      <div class="titleblock" data-reveal>
-        <h3 class="titleblock__head">Title block</h3>
-        <dl>
-          <div><dt>Discipline</dt><dd>Electrical / Computer Eng.</dd></div>
-          <div><dt>Institution</dt><dd>UQ · Brisbane</dd></div>
-          <div><dt>Program</dt><dd>BE / ME · Year 4</dd></div>
-          <div><dt>Focus</dt><dd>Embedded · PCB · Control</dd></div>
-          <div><dt>Interests</dt><dd>Space · Defence · Motorsport</dd></div>
-          <div><dt>Status</dt><dd class="ok">Open to grad &amp; internship roles</dd></div>
-        </dl>
+        <button class="card" type="button" data-dialog="dlg-tpmania" aria-haspopup="dialog" data-reveal>
+          <span class="shot"><img src="Photos/TPmania.png" alt="" loading="lazy" /></span>
+          <span class="card__meta"><span class="card__name"><b aria-hidden="true">02</b>TPMania</span><span class="card__tag">Team</span></span>
+          <span class="card__view">View details <span aria-hidden="true">↗</span></span>
+        </button>
+        <button class="card" type="button" data-dialog="dlg-loggy" aria-haspopup="dialog" data-reveal>
+          <span class="shot"><img src="Photos/Loggy.png" alt="" loading="lazy" /></span>
+          <span class="card__meta"><span class="card__name"><b aria-hidden="true">03</b>LoggyBoard</span><span class="card__tag">Team</span></span>
+          <span class="card__view">View details <span aria-hidden="true">↗</span></span>
+        </button>
+        <button class="card" type="button" data-dialog="dlg-card" aria-haspopup="dialog" data-reveal>
+          <span class="shot"><img src="Photos/card.png" alt="" loading="lazy" /></span>
+          <span class="card__meta"><span class="card__name"><b aria-hidden="true">04</b>PCB Card</span><span class="card__tag">Solo</span></span>
+          <span class="card__view">View details <span aria-hidden="true">↗</span></span>
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- ===================== CAPABILITIES ===================== -->
-  <section class="systems" id="systems" aria-labelledby="systems-title">
-    <div class="container">
-      <header class="section-head" data-reveal>
-        <p class="label">Capabilities</p>
-        <h2 class="section-head__title" id="systems-title">By subsystem.</h2>
+  <!-- ============================ PROFILE ============================ -->
+  <section class="sec" id="profile" aria-labelledby="profile-title">
+    <div class="wrap">
+      <header class="sec__head" data-reveal>
+        <span class="sec__num" aria-hidden="true">02</span>
+        <h2 class="sec__title glitch" id="profile-title" data-text="The Operator">The Operator</h2>
+        <p class="sec__sub">The person behind the boards</p>
       </header>
-      <div class="systems__grid">
-        <div class="subsys" data-reveal>
-          <h3>Hardware</h3>
-          <ul>
-            <li>Schematic capture</li>
-            <li>Multi-layer PCB layout</li>
-            <li>RF / antenna design</li>
-            <li>Power &amp; signal integrity</li>
-            <li>Design for manufacture</li>
-          </ul>
+      <div class="profile__grid">
+        <div data-reveal>
+          <p>I'm a fourth-year Bachelor and Master of <b>Electrical &amp; Computer Engineering</b> student at the University of Queensland. I like where firmware meets fabrication: copper traces, control loops, and the moment a board you laid out yourself boots for the first time.</p>
+          <p>My interests run toward <b>space, defence, and motorsport</b>. Fields where the engineering has to be ambitious and unforgiving. Off the bench I'm under my <b>E46 330ci</b>, digging through records, or reading about Apollo.</p>
+          <p>Most of what's here I designed end to end: schematic, layout, firmware, and the interface that makes the hardware usable. I like the full stack of a physical product, from the first net to the last detail.</p>
         </div>
-        <div class="subsys" data-reveal>
-          <h3>Embedded</h3>
-          <ul>
-            <li>C / embedded C++</li>
-            <li>STM32 · ATmega · nRF52</li>
-            <li>ESP32 · RTOS basics</li>
-            <li>BLE · I²C · SPI · UART</li>
-            <li>Bare-metal firmware</li>
-          </ul>
-        </div>
-        <div class="subsys" data-reveal>
-          <h3>Control &amp; vision</h3>
-          <ul>
-            <li>Closed-loop control</li>
-            <li>Servo / actuator drive</li>
-            <li>Computer vision</li>
-            <li>ArUco / fiducial tracking</li>
-            <li>Sensor fusion</li>
-          </ul>
-        </div>
-        <div class="subsys" data-reveal>
-          <h3>Interfaces</h3>
-          <ul>
-            <li>Custom GUIs</li>
-            <li>Real-time telemetry</li>
-            <li>Python tooling</li>
-            <li>Data logging &amp; viz</li>
-            <li>Web front-ends</li>
-          </ul>
+        <div class="manifest" data-reveal>
+          <div class="manifest__row"><span class="k">Discipline</span><span class="d" aria-hidden="true"></span><span class="v">Elec / Comp Eng</span></div>
+          <div class="manifest__row"><span class="k">Station</span><span class="d" aria-hidden="true"></span><span class="v">UQ · Brisbane</span></div>
+          <div class="manifest__row"><span class="k">Program</span><span class="d" aria-hidden="true"></span><span class="v">BE / ME · Yr 4</span></div>
+          <div class="manifest__row"><span class="k">Focus</span><span class="d" aria-hidden="true"></span><span class="v">Embedded · PCB</span></div>
+          <div class="manifest__row"><span class="k">Vector</span><span class="d" aria-hidden="true"></span><span class="v">Space · Defence</span></div>
+          <div class="manifest__row"><span class="k">Status</span><span class="d" aria-hidden="true"></span><span class="v">Open to roles</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== CONTACT ===================== -->
-  <section class="contact" id="contact" aria-labelledby="contact-title">
-    <div class="container">
-      <header class="section-head" data-reveal>
-        <p class="label">Contact</p>
-        <h2 class="section-head__title" id="contact-title">Building something hard?</h2>
-        <p class="section-head__note">
-          If you're working on something in space, defence, motorsport, or anywhere
-          hardware has to be right, I'd like to hear about it.
-        </p>
+  <!-- ============================ SYSTEMS ============================ -->
+  <section class="sec" id="systems" aria-labelledby="systems-title">
+    <div class="wrap">
+      <header class="sec__head" data-reveal>
+        <span class="sec__num" aria-hidden="true">03</span>
+        <h2 class="sec__title glitch" id="systems-title" data-text="Systems">Systems</h2>
+        <p class="sec__sub">What I bring to the bench</p>
       </header>
-      <div class="contact__links">
-        <a class="link-row" href="mailto:cameron.roberts1502@gmail.com" data-reveal>
-          <span class="link-row__k">Email</span>
-          <span class="link-row__v">cameron.roberts1502@gmail.com</span>
-          <span class="link-row__arrow" aria-hidden="true">→</span>
+      <div class="caps" data-reveal>
+        <div class="cap"><h3>Hardware <span class="n">/01</span></h3><ul><li>Schematic capture</li><li>Multi-layer PCB</li><li>RF / antenna</li><li>Signal integrity</li><li>Design for mfg</li></ul></div>
+        <div class="cap"><h3>Embedded <span class="n">/02</span></h3><ul><li>C / C++</li><li>STM32 · nRF52</li><li>ESP32 · RTOS</li><li>BLE · I2C · SPI</li><li>Bare-metal</li></ul></div>
+        <div class="cap"><h3>Control / Vision <span class="n">/03</span></h3><ul><li>Closed-loop control</li><li>Servo drive</li><li>Computer vision</li><li>ArUco tracking</li><li>Sensor fusion</li></ul></div>
+        <div class="cap"><h3>Interfaces <span class="n">/04</span></h3><ul><li>Custom GUIs</li><li>Live telemetry</li><li>Python tooling</li><li>Data logging</li><li>Web front-ends</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CONTACT ============================ -->
+  <section class="sec" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <h2 class="contact__big glitch" id="contact-title" data-text="Open a channel">Open a channel</h2>
+      <div class="channels">
+        <a class="channel" href="mailto:cameron.roberts1502@gmail.com" data-reveal>
+          <span class="channel__k">Email</span><span class="channel__v">cameron.roberts1502@gmail.com</span><span class="channel__arrow" aria-hidden="true">↗</span>
         </a>
-        <a class="link-row" href="https://www.linkedin.com/in/cameron-roberts-b2ba00300/" data-reveal>
-          <span class="link-row__k">LinkedIn</span>
-          <span class="link-row__v">in/cameron-roberts</span>
-          <span class="link-row__arrow" aria-hidden="true">→</span>
+        <a class="channel" href="https://www.linkedin.com/in/cameron-roberts-b2ba00300/" target="_blank" rel="noopener noreferrer" data-reveal>
+          <span class="channel__k">LinkedIn</span><span class="channel__v">in/cameron-roberts <small>opens in new tab</small></span><span class="channel__arrow" aria-hidden="true">↗</span>
         </a>
-        <a class="link-row" href="https://github.com/cameronroberts1502" data-reveal>
-          <span class="link-row__k">GitHub</span>
-          <span class="link-row__v">@cameronroberts1502</span>
-          <span class="link-row__arrow" aria-hidden="true">→</span>
+        <a class="channel" href="https://github.com/cameronroberts1502" target="_blank" rel="noopener noreferrer" data-reveal>
+          <span class="channel__k">GitHub</span><span class="channel__v">@cameronroberts1502 <small>opens in new tab</small></span><span class="channel__arrow" aria-hidden="true">↗</span>
         </a>
       </div>
     </div>
   </section>
 </main>
 
-<footer class="footer">
-  <div class="container footer__inner">
-    <span>Cameron Roberts</span>
-    <span>Designed &amp; built in Brisbane · <span id="year">2026</span></span>
-  </div>
+<footer>
+  <span><b>Made by</b> Cameron Roberts</span>
+  <span>Imagery: NASA · USAF · Wikimedia (CC BY)</span>
+  <span><span class="star" aria-hidden="true">✳</span> Brisbane · <span id="year">2026</span></span>
 </footer>
 
-<!-- Animation libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
-<script type="module" src="assets/js/scene.js"></script>
+<!-- ============================ PROJECT DIALOGS ============================ -->
+<section aria-label="Project details">
+<dialog id="dlg-astra" aria-labelledby="dlg-astra-t">
+  <div class="dlg__head">
+    <div><h2 class="dlg__title" id="dlg-astra-t">A.S.T.R.A.</h2><p class="dlg__sub">Autonomous tracking, rendezvous &amp; alignment · Team of 2</p></div>
+    <button class="dlg__close" type="button" data-close aria-label="Close"><span aria-hidden="true">✕</span></button>
+  </div>
+  <div class="dlg__body">
+    <h3>Overview</h3>
+    <p>A vehicle that finds a target, lines itself up, and closes the gap on its own. A pan-and-tilt camera locks onto a fiducial marker, estimates its relative pose, and drives a closed-loop alignment until capture. The rendezvous problem real spacecraft solve, scaled to the bench.</p>
+    <p>An ESP32-CAM streams frames processed for ArUco marker detection, recovering the target's relative position and orientation. Seeed XIAO nRF52840 controllers run the control loop and drive pan/tilt servos to keep the marker centred, while a Bluetooth Low Energy link carries telemetry between nodes.</p>
+    <h3>Specifications</h3>
+    <dl class="dlg__spec">
+      <div><dt>Controller</dt><dd>XIAO nRF52840</dd></div><div><dt>Vision</dt><dd>ESP32-CAM · ArUco</dd></div>
+      <div><dt>Actuation</dt><dd>Pan / tilt servos</dd></div><div><dt>Link</dt><dd>Bluetooth LE</dd></div>
+      <div><dt>Language</dt><dd>C</dd></div><div><dt>Role</dt><dd>Team of two</dd></div>
+    </dl>
+    <h3>Highlights</h3>
+    <ul class="dlg__points">
+      <li>Closed-loop visual servoing: detect marker, estimate pose, correct, converge.</li>
+      <li>Wireless BLE command and telemetry between distributed microcontroller nodes.</li>
+      <li>Hand-tuned control loop built for deterministic, low-latency response.</li>
+      <li>Spanned mechanics, electronics, vision and firmware across two people.</li>
+    </ul>
+    <h3>Gallery</h3>
+    <div class="dlg__gallery">
+      <img src="Photos/GUI_ASTRA.png" alt="A.S.T.R.A. mission-control interface: range to target, link quality, closing velocity and live pitch, yaw and roll readouts." loading="lazy" />
+      <video controls muted playsinline preload="metadata" poster="Photos/ASTRA.png" aria-label="Video of the A.S.T.R.A. platform tracking its docking target.">
+        <source src="Photos/IMG_4464.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="dlg-tpmania" aria-labelledby="dlg-tpmania-t">
+  <div class="dlg__head">
+    <div><h2 class="dlg__title" id="dlg-tpmania-t">TPMania</h2><p class="dlg__sub">A hardware rhythm game built from scratch · Team</p></div>
+    <button class="dlg__close" type="button" data-close aria-label="Close"><span aria-hidden="true">✕</span></button>
+  </div>
+  <div class="dlg__body">
+    <h3>Overview</h3>
+    <p>An arcade-style rhythm game that runs on hardware we designed and assembled, not on a screen. Players hit illuminated buttons in time with patterns rendered across an LED matrix, all orchestrated by an STM32 reading input and driving the lights in real time.</p>
+    <p>A custom PCB ties together the STM32, the LED matrix and a bank of illuminated arcade buttons. Firmware handles beat timing, input scanning, scoring and the lighting choreography under a tight real-time budget.</p>
+    <h3>Specifications</h3>
+    <dl class="dlg__spec">
+      <div><dt>Controller</dt><dd>STM32</dd></div><div><dt>Display</dt><dd>LED matrix</dd></div>
+      <div><dt>Input</dt><dd>Arcade buttons</dd></div><div><dt>Board</dt><dd>Custom PCB</dd></div>
+    </dl>
+    <h3>Highlights</h3>
+    <ul class="dlg__points">
+      <li>One custom board integrating the MCU, matrix driving and button I/O.</li>
+      <li>Real-time input scanning and beat sync under a tight timing budget.</li>
+      <li>Hardware, firmware and gameplay split across the team.</li>
+    </ul>
+    <h3>Gallery</h3>
+    <div class="dlg__gallery"><img src="Photos/TPmania.png" alt="TPMania arcade rhythm game: custom PCB with an LED matrix and illuminated arcade buttons." loading="lazy" /></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-loggy" aria-labelledby="dlg-loggy-t">
+  <div class="dlg__head">
+    <div><h2 class="dlg__title" id="dlg-loggy-t">LoggyBoard</h2><p class="dlg__sub">Multi-channel data acquisition &amp; logging · Team</p></div>
+    <button class="dlg__close" type="button" data-close aria-label="Close"><span aria-hidden="true">✕</span></button>
+  </div>
+  <div class="dlg__body">
+    <h3>Overview</h3>
+    <p>A bench instrument that captures what you actually need when characterising a circuit or a moving rig: voltage, temperature and acceleration, streamed live into a custom interface for plotting and capture.</p>
+    <p>A custom PCB built around an ATmega328P samples the sensors and streams readings to a bespoke GUI on a host machine for live visualisation and logging, with reliable framing so the data stays clean.</p>
+    <h3>Specifications</h3>
+    <dl class="dlg__spec">
+      <div><dt>Controller</dt><dd>ATmega328P</dd></div><div><dt>Channels</dt><dd>V · Temp · Accel</dd></div>
+      <div><dt>Board</dt><dd>Custom PCB</dd></div><div><dt>Interface</dt><dd>Custom GUI</dd></div>
+    </dl>
+    <h3>Highlights</h3>
+    <ul class="dlg__points">
+      <li>Custom board and firmware sampling three sensor domains at once.</li>
+      <li>Live streaming to a bespoke GUI for real-time plotting and capture.</li>
+      <li>Reliable framing so logged data stays clean and analysable.</li>
+    </ul>
+    <h3>Gallery</h3>
+    <div class="dlg__gallery"><img src="Photos/Loggy.png" alt="LoggyBoard data-acquisition PCB sampling voltage, temperature and acceleration." loading="lazy" /></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-card" aria-labelledby="dlg-card-t">
+  <div class="dlg__head">
+    <div><h2 class="dlg__title" id="dlg-card-t">PCB Card</h2><p class="dlg__sub">A circuit board you can hand someone · Solo</p></div>
+    <button class="dlg__close" type="button" data-close aria-label="Close"><span aria-hidden="true">✕</span></button>
+  </div>
+  <div class="dlg__body">
+    <h3>Overview</h3>
+    <p>A business card that's also a working circuit board. Hand it over, tap it to a phone, and it talks back: an antenna and NFC chip laid straight into the copper. No battery, no app, just tuned RF and a layout that doubles as the card's identity.</p>
+    <h3>Specifications</h3>
+    <dl class="dlg__spec">
+      <div><dt>Board</dt><dd>Custom PCB</dd></div><div><dt>RF</dt><dd>Trace antenna</dd></div>
+      <div><dt>Chip</dt><dd>NFC</dd></div><div><dt>Power</dt><dd>Harvested</dd></div>
+    </dl>
+    <h3>Highlights</h3>
+    <ul class="dlg__points">
+      <li>Antenna designed directly into the copper. RF layout that has to work.</li>
+      <li>Passive tap-to-share with no battery or app.</li>
+      <li>Layout doubles as graphic identity.</li>
+    </ul>
+    <h3>Gallery</h3>
+    <div class="dlg__gallery"><img src="Photos/card.png" alt="A PCB business card with an NFC trace antenna etched into the copper." loading="lazy" /></div>
+  </div>
+</dialog>
+</section>
+
 <script src="assets/js/main.js" defer></script>
 </body>
 </html>
