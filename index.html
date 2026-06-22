@@ -22,10 +22,11 @@
 <body>
 
 <a class="skip-link" href="#main">Skip to content</a>
+<div class="filmgrain" aria-hidden="true"></div>
 
 <!-- GLITCH LOADER -->
 <div class="loader" id="loader" aria-hidden="true">
-  <img class="loader__logo" src="assets/img/logo.svg" alt="" />
+  <img class="loader__logo" src="assets/img/logo-crop.jpg" alt="" />
   <div class="loader__name" data-text="Cameron Roberts">Cameron Roberts</div>
   <div class="loader__line mono">Receiving signal</div>
   <div class="loader__scan" aria-hidden="true"></div>
@@ -34,7 +35,7 @@
 <!-- ============================ MASTHEAD ============================ -->
 <header>
   <nav class="nav" aria-label="Primary">
-    <a class="brand" href="#main"><img src="assets/img/logo.svg" alt="Cameron Roberts" /></a>
+    <a class="brand" href="#main"><img src="assets/img/logo-crop.jpg" alt="Cameron Roberts" /></a>
     <div class="nav__links">
       <a href="#work">Work</a><a href="#profile">Profile</a><a href="#systems">Systems</a><a href="#contact">Contact</a>
     </div>
@@ -52,20 +53,20 @@
       <div class="blend"><span>Cameron</span><span>Roberts</span></div>
     </div>
 
-    <div class="mh__side" aria-hidden="true"><span>Electrical</span><span>Computer</span><span>Engineering</span></div>
-
     <div class="introbar">
       <span class="brace" aria-hidden="true">{</span>
       <div class="mh__info">
-        <div class="mh__kicker"><span class="star" aria-hidden="true">✳</span><span class="mono">Portfolio / 2026</span></div>
+        <div class="mh__kicker"><span class="star" aria-hidden="true"></span><span class="mono">Portfolio / 2026</span></div>
         <p class="mh__role">Electrical &amp; Computer Engineer · Brisbane</p>
-        <p class="mh__intro">I build hardware end to end: schematic capture, PCB layout, embedded firmware, and the software that makes a board usable. Into Apollo, my E46, and anything analog.</p>
+        <p class="mh__intro">I build hardware end to end: schematic capture, PCB layout, embedded firmware, and the software that makes a board usable.</p>
         <div class="mh__cta">
           <a class="pill pill--solid" href="#work">See the work<span class="pill__arrow" aria-hidden="true">↗</span></a>
           <a class="pill" href="#contact">Get in touch<span class="pill__arrow" aria-hidden="true">↗</span></a>
         </div>
       </div>
+      <div class="mh__side" aria-hidden="true"><span>Electrical</span><span>Computer</span><span>Engineering</span></div>
     </div>
+    <div class="scrap scrap--tape" aria-hidden="true" style="bottom:7%;right:9%"></div>
   </section>
 </header>
 
@@ -73,6 +74,7 @@
   <!-- ============================ WORK ============================ -->
   <section class="sec" id="work" aria-labelledby="work-title">
     <div class="work__aside" aria-hidden="true"><img src="assets/img/jet2.jpg" alt="" loading="lazy" /></div>
+    <div class="scrap scrap--scratch" aria-hidden="true" style="bottom:9%;left:1%"></div>
     <div class="wrap">
       <header class="sec__head" data-reveal>
         <h2 class="sec__title glitch" id="work-title" data-text="[ The Builds">[ The Builds</h2>
@@ -107,6 +109,8 @@
 
   <!-- ============================ PROFILE ============================ -->
   <section class="sec" id="profile" aria-labelledby="profile-title">
+    <div class="profile__aside" aria-hidden="true"><img src="assets/img/m3.jpg" alt="" loading="lazy" /></div>
+    <div class="scrap scrap--dots" aria-hidden="true" style="top:10%;right:7%"></div>
     <div class="wrap">
       <header class="sec__head" data-reveal>
         <h2 class="sec__title glitch" id="profile-title" data-text="[ The Operator">[ The Operator</h2>
@@ -132,6 +136,7 @@
 
   <!-- ============================ SYSTEMS ============================ -->
   <section class="sec" id="systems" aria-labelledby="systems-title">
+    <div class="scrap scrap--blob" aria-hidden="true" style="bottom:12%;right:3%"></div>
     <div class="wrap">
       <header class="sec__head" data-reveal>
         <h2 class="sec__title glitch" id="systems-title" data-text="[ Systems">[ Systems</h2>
@@ -148,6 +153,8 @@
 
   <!-- ============================ CONTACT ============================ -->
   <section class="sec" id="contact" aria-labelledby="contact-title">
+    <div class="contact__aside" aria-hidden="true"><img src="assets/img/earthrise.jpg" alt="" loading="lazy" /></div>
+    <div class="scrap scrap--tear" aria-hidden="true" style="top:13%;left:1.5%"></div>
     <div class="wrap">
       <h2 class="contact__big glitch" id="contact-title" data-text="[ Open a channel">[ Open a channel</h2>
       <div class="channels">
@@ -168,7 +175,7 @@
 <footer>
   <span><b>Made by</b> Cameron Roberts</span>
   <span>Imagery: NASA · USAF · Wikimedia (CC BY)</span>
-  <span><span class="star" aria-hidden="true">✳</span> Brisbane · <span id="year">2026</span></span>
+  <span><span class="star" aria-hidden="true"></span> Brisbane · <span id="year">2026</span></span>
 </footer>
 
 <!-- ============================ PROJECT DIALOGS ============================ -->
