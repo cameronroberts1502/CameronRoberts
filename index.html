@@ -47,10 +47,12 @@
       <figure class="c1"><img src="assets/img/aldrin.jpg" alt="" loading="eager" /></figure>
       <figure class="c2"><img src="assets/img/jet1.jpg" alt="" loading="eager" /></figure>
       <figure class="c3"><img src="assets/img/space1.jpg" alt="" loading="eager" /></figure>
-      <figure class="c4"><img src="assets/img/moto3.jpg" alt="" loading="lazy" /></figure>
+      <figure class="c4"><img src="assets/img/nur.jpg" alt="" loading="lazy" /></figure>
       <figure class="c5"><img src="assets/img/moto1.jpg" alt="" loading="lazy" /></figure>
-      <div class="blend"><span>Cameron</span><span>Roberts</span><span>Cameron</span></div>
+      <div class="blend"><span>Cameron</span><span>Roberts</span></div>
     </div>
+
+    <div class="mh__side" aria-hidden="true"><span>Electrical</span><span>Computer</span><span>Engineering</span></div>
 
     <div class="introbar">
       <span class="brace" aria-hidden="true">{</span>
@@ -70,33 +72,35 @@
 <main id="main">
   <!-- ============================ WORK ============================ -->
   <section class="sec" id="work" aria-labelledby="work-title">
+    <div class="work__aside" aria-hidden="true"><img src="assets/img/jet2.jpg" alt="" loading="lazy" /></div>
     <div class="wrap">
       <header class="sec__head" data-reveal>
-        <span class="sec__num" aria-hidden="true">01</span>
-        <h2 class="sec__title glitch" id="work-title" data-text="The Builds">The Builds</h2>
+        <h2 class="sec__title glitch" id="work-title" data-text="[ The Builds">[ The Builds</h2>
         <p class="sec__sub">Four projects. Open one to read the detail.</p>
       </header>
-      <div class="grid-work">
-        <button class="card" type="button" data-dialog="dlg-astra" aria-haspopup="dialog" data-reveal>
-          <span class="shot"><img src="Photos/GUI_ASTRA.png" alt="" loading="lazy" /></span>
-          <span class="card__meta"><span class="card__name"><b aria-hidden="true">01</b>A.S.T.R.A.</span><span class="card__tag">Team · 2</span></span>
-          <span class="card__view">View details <span aria-hidden="true">↗</span></span>
-        </button>
-        <button class="card" type="button" data-dialog="dlg-tpmania" aria-haspopup="dialog" data-reveal>
-          <span class="shot"><img src="Photos/TPmania.png" alt="" loading="lazy" /></span>
-          <span class="card__meta"><span class="card__name"><b aria-hidden="true">02</b>TPMania</span><span class="card__tag">Team</span></span>
-          <span class="card__view">View details <span aria-hidden="true">↗</span></span>
-        </button>
-        <button class="card" type="button" data-dialog="dlg-loggy" aria-haspopup="dialog" data-reveal>
-          <span class="shot"><img src="Photos/Loggy.png" alt="" loading="lazy" /></span>
-          <span class="card__meta"><span class="card__name"><b aria-hidden="true">03</b>LoggyBoard</span><span class="card__tag">Team</span></span>
-          <span class="card__view">View details <span aria-hidden="true">↗</span></span>
-        </button>
-        <button class="card" type="button" data-dialog="dlg-card" aria-haspopup="dialog" data-reveal>
-          <span class="shot"><img src="Photos/card.png" alt="" loading="lazy" /></span>
-          <span class="card__meta"><span class="card__name"><b aria-hidden="true">04</b>PCB Card</span><span class="card__tag">Solo</span></span>
-          <span class="card__view">View details <span aria-hidden="true">↗</span></span>
-        </button>
+      <div class="worklist" data-reveal>
+        <div class="wrows">
+          <button class="wrow" type="button" data-dialog="dlg-astra" aria-haspopup="dialog">
+            <span class="wtitle glitch" data-text="A.S.T.R.A.">A.S.T.R.A.</span>
+            <span class="wthumb"><img src="Photos/GUI_ASTRA.png" alt="" loading="lazy" /></span>
+            <span class="wblurb">Autonomous tracking, rendezvous &amp; alignment. <em>Team of 2</em></span>
+          </button>
+          <button class="wrow" type="button" data-dialog="dlg-tpmania" aria-haspopup="dialog">
+            <span class="wtitle glitch" data-text="TPMania">TPMania</span>
+            <span class="wthumb"><img src="Photos/TPmania.png" alt="" loading="lazy" /></span>
+            <span class="wblurb">Hardware rhythm game on a custom STM32 board. <em>Team</em></span>
+          </button>
+          <button class="wrow" type="button" data-dialog="dlg-loggy" aria-haspopup="dialog">
+            <span class="wtitle glitch" data-text="LoggyBoard">LoggyBoard</span>
+            <span class="wthumb"><img src="Photos/Loggy.png" alt="" loading="lazy" /></span>
+            <span class="wblurb">Multi-channel bench data acquisition with a live GUI. <em>Team</em></span>
+          </button>
+          <button class="wrow" type="button" data-dialog="dlg-card" aria-haspopup="dialog">
+            <span class="wtitle glitch" data-text="PCB Card">PCB Card</span>
+            <span class="wthumb"><img src="Photos/card.png" alt="" loading="lazy" /></span>
+            <span class="wblurb">A working circuit board you can hand someone. <em>Solo</em></span>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -105,8 +109,7 @@
   <section class="sec" id="profile" aria-labelledby="profile-title">
     <div class="wrap">
       <header class="sec__head" data-reveal>
-        <span class="sec__num" aria-hidden="true">02</span>
-        <h2 class="sec__title glitch" id="profile-title" data-text="The Operator">The Operator</h2>
+        <h2 class="sec__title glitch" id="profile-title" data-text="[ The Operator">[ The Operator</h2>
         <p class="sec__sub">The person behind the boards</p>
       </header>
       <div class="profile__grid">
@@ -131,8 +134,7 @@
   <section class="sec" id="systems" aria-labelledby="systems-title">
     <div class="wrap">
       <header class="sec__head" data-reveal>
-        <span class="sec__num" aria-hidden="true">03</span>
-        <h2 class="sec__title glitch" id="systems-title" data-text="Systems">Systems</h2>
+        <h2 class="sec__title glitch" id="systems-title" data-text="[ Systems">[ Systems</h2>
         <p class="sec__sub">What I bring to the bench</p>
       </header>
       <div class="caps" data-reveal>
@@ -147,7 +149,7 @@
   <!-- ============================ CONTACT ============================ -->
   <section class="sec" id="contact" aria-labelledby="contact-title">
     <div class="wrap">
-      <h2 class="contact__big glitch" id="contact-title" data-text="Open a channel">Open a channel</h2>
+      <h2 class="contact__big glitch" id="contact-title" data-text="[ Open a channel">[ Open a channel</h2>
       <div class="channels">
         <a class="channel" href="mailto:cameron.roberts1502@gmail.com" data-reveal>
           <span class="channel__k">Email</span><span class="channel__v">cameron.roberts1502@gmail.com</span><span class="channel__arrow" aria-hidden="true">↗</span>
