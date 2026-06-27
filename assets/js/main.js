@@ -75,4 +75,30 @@
     setTimeout(function () { loader.classList.add("is-out"); }, 1700); // start exit wipe
     setTimeout(dismiss, 3200); // failsafe (never tied to animation completion)
   }
+
+  /* console easter egg: a note for the curious recruiter or dev who opens devtools */
+  try {
+    console.log("%c[ CAMERON ROBERTS // transmission received", "color:#ECE6D8;font:700 14px ui-monospace,monospace");
+    console.log("%c  you opened the console. that's the kind of curiosity i build for.\n  hardware end to end, currently open to roles.\n  cameron.roberts1502@gmail.com", "color:#9a958a;font:12px ui-monospace,monospace");
+  } catch (e) {}
+
+  /* konami code -> a brief "cleared for launch" transmission overlay (hidden, optional) */
+  (function () {
+    var seq = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65], i = 0, firing = false;
+    function fire() {
+      if (firing) return; firing = true;
+      var o = document.createElement("div");
+      o.className = "egg"; o.setAttribute("aria-hidden", "true");
+      o.innerHTML = '<span class="egg__t" data-text="Cleared for launch">Cleared for launch</span>';
+      document.body.appendChild(o);
+      requestAnimationFrame(function () { o.classList.add("egg--in"); });
+      setTimeout(function () { o.classList.add("egg--out"); }, reduce ? 1400 : 2100);
+      setTimeout(function () { if (o.parentNode) o.parentNode.removeChild(o); firing = false; }, reduce ? 1800 : 2700);
+    }
+    document.addEventListener("keydown", function (e) {
+      var k = e.keyCode || e.which;
+      i = (k === seq[i]) ? i + 1 : (k === seq[0] ? 1 : 0);
+      if (i === seq.length) { i = 0; fire(); }
+    });
+  })();
 })();

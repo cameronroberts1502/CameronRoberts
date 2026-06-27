@@ -21,6 +21,8 @@
   --grunge:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0 0 0 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   /* lighter erosion (~10% holes) for the big name so it stays legible over greys */
   --grunge-light:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='gl'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23gl)'/%3E%3C/svg%3E");
+  /* coarse torn-grain for the photo dissolve (big chunky speckle, ~30% holes) */
+  --dissolve:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.045' numOctaves='2'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0 0 0 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23d)'/%3E%3C/svg%3E");
 }
 
 *{box-sizing:border-box}
@@ -73,7 +75,7 @@ a{color:inherit;text-decoration:none}
   .glitch:hover::before{opacity:.9;color:#fff;mix-blend-mode:screen;animation:glA .5s steps(2,end) 3}
   .glitch:hover::after{opacity:.7;color:#9a9a9a;animation:glB .5s steps(2,end) 3}
   .glitch:hover{animation:glSkew .32s steps(2,end) 3}
-  .collage figure:hover img,.wrow:hover .wthumb img{animation:imgGl2 .4s steps(4,end) 2;filter:grayscale(1) contrast(2.25) brightness(1.16) drop-shadow(2px 0 0 rgba(255,255,255,.45)) drop-shadow(-2px 0 0 rgba(150,150,150,.5))}
+  .collage figure:hover img,.wrow:hover .wthumb img{animation:imgGl2 .4s steps(4,end) 2;filter:grayscale(1) contrast(3.8) brightness(1.28) drop-shadow(2px 0 0 rgba(255,255,255,.45)) drop-shadow(-2px 0 0 rgba(150,150,150,.5))}
   .collage:hover .blend span{animation:glSkew .3s steps(2,end) 3}
   .wrow:hover .wtitle::before{opacity:.9;color:#fff;mix-blend-mode:screen;animation:glA .5s steps(2,end) 3}
   .wrow:hover .wtitle::after{opacity:.7;color:#9a9a9a;animation:glB .5s steps(2,end) 3}
@@ -105,18 +107,30 @@ main[inert]{filter:blur(1px)}
 .loader{position:fixed;inset:0;z-index:200;background:var(--bg);display:none;align-items:center;justify-content:center;flex-direction:column;clip-path:inset(0 0 0 0);transition:clip-path .6s var(--ease),opacity .5s var(--ease)}
 .js .loader{display:flex}
 .loader.is-out{clip-path:inset(0 0 100% 0);opacity:0}
-.loader__logo{width:clamp(180px,40vw,300px);margin-bottom:1.4rem;mix-blend-mode:screen;filter:contrast(1.45) brightness(1.05)}
+.loader__logo{width:clamp(240px,52vw,440px);height:auto;margin-bottom:1.4rem;display:block}
 .loader__name{position:relative;font-family:var(--display);font-size:clamp(2.4rem,9vw,5rem);text-transform:uppercase;letter-spacing:.02em;color:var(--ink);line-height:.9}
 .loader__name::before,.loader__name::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%}
 .loader__name::before{color:#fff;mix-blend-mode:screen;animation:glA .42s steps(2,end) 4}
 .loader__name::after{color:#8a8a8a;animation:glB .42s steps(2,end) 4}
 .loader__line{margin-top:1.2rem}
 .loader__scan{position:absolute;inset:0;pointer-events:none;opacity:.10;background:repeating-linear-gradient(to bottom,#fff 0 1px,transparent 1px 4px)}
+/* konami easter egg overlay (hidden until triggered; aria-hidden, never traps input) */
+.egg{position:fixed;inset:0;z-index:300;display:grid;place-items:center;pointer-events:none;background:rgba(11,11,11,.9);opacity:0;transition:opacity .25s var(--ease)}
+.egg.egg--in{opacity:1}
+.egg.egg--out{opacity:0}
+.egg::after{content:"";position:absolute;inset:0;opacity:.12;background:repeating-linear-gradient(to bottom,#fff 0 1px,transparent 1px 4px)}
+.egg__t{position:relative;font-family:var(--display);font-weight:400;font-size:clamp(2rem,9vw,5rem);text-transform:uppercase;letter-spacing:.02em;color:var(--ink);-webkit-mask-image:var(--grunge-light);mask-image:var(--grunge-light);-webkit-mask-size:320px;mask-size:320px}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .egg__t::before,.egg__t::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%}
+  .egg__t::before{color:#fff;mix-blend-mode:screen;animation:glA .42s steps(2,end) infinite}
+  .egg__t::after{color:#8a8a8a;animation:glB .42s steps(2,end) infinite}
+}
 
 /* ============================ NAV ============================ */
 .nav{position:absolute;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.05rem var(--pad);max-width:var(--max);margin-inline:auto}
+/* his actual logo, pre-keyed to a transparent PNG (no box, no blend needed) */
 .brand{display:inline-flex;align-items:center}
-.brand img{height:40px;width:auto;display:block;mix-blend-mode:screen;filter:contrast(1.45) brightness(1.05)}
+.brand img{height:42px;width:auto;display:block}
 .nav__links{display:flex;gap:1.5rem}
 .nav__links a{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s var(--ease)}
 .nav__links a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
@@ -125,7 +139,7 @@ main[inert]{filter:blur(1px)}
 .masthead{position:relative;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;gap:clamp(1.2rem,3vw,2.2rem);padding:6rem var(--pad) 2.5rem;max-width:var(--max);margin-inline:auto}
 .collage{position:relative;isolation:isolate;height:min(52vh,540px);display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(8,1fr);gap:clamp(.4rem,1vw,.7rem)}
 .collage figure{margin:0;position:relative;overflow:hidden;background:#000;border:1px solid rgba(236,230,216,.08)}
-.collage img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(2.9) brightness(1.2)}
+.collage img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(3.8) brightness(1.28)}
 .c1 img{object-position:50% 12%} /* keep the astronaut's head in frame */
 .collage figure::after{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(circle,transparent 1px,rgba(11,11,11,.18) 1.6px) 0 0/4px 4px;mix-blend-mode:multiply}
 /* darken the central band behind the name so the inverted text stays legible (photos still read through) */
@@ -151,6 +165,12 @@ main[inert]{filter:blur(1px)}
 .sec__head{display:block;margin-bottom:clamp(2.5rem,5vw,4rem)}
 .sec__title{font-family:var(--display);font-weight:400;font-size:clamp(2.4rem,7vw,5rem);line-height:.85;margin:0;text-transform:uppercase;letter-spacing:.01em}
 .sec__sub{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:.6rem 0 0}
+/* split header: big title left, a grainy organic shape filling the space on the right */
+.sec__head--split{display:flex;justify-content:space-between;align-items:center;gap:clamp(1.5rem,5vw,4rem);flex-wrap:wrap}
+.sec__shape{flex:0 0 auto;width:clamp(120px,16vw,180px);height:clamp(120px,16vw,180px);transform:rotate(-9deg);
+  background:rgba(236,230,216,.85);background-image:var(--noise);background-size:120px;background-blend-mode:multiply;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0L13.7 10.3L24 12L13.7 13.7L12 24L10.3 13.7L0 12L10.3 10.3Z'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0L13.7 10.3L24 12L13.7 13.7L12 24L10.3 13.7L0 12L10.3 10.3Z'/%3E%3C/svg%3E") center/contain no-repeat}
 
 /* WORK: stacked list. Left half = rows (title · thumb · blurb). A single tall image
    on the right spans the WHOLE section (taller than the rows, runs up behind the
@@ -160,24 +180,24 @@ main[inert]{filter:blur(1px)}
 /* offset + oversized so it never lines up with the section or the rows; the
    title's right end runs over it and inverts */
 .work__aside{position:absolute;top:-7%;right:0;width:54%;height:78%;overflow:hidden;z-index:0;pointer-events:none}
-.work__aside img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;filter:grayscale(1) contrast(1.95) brightness(.86)}
+.work__aside img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;filter:grayscale(1) contrast(3.2) brightness(.95)}
 .work__aside::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,transparent 1px,rgba(11,11,11,.2) 1.6px) 0 0/4px 4px;mix-blend-mode:multiply}
 .worklist{position:relative}
 .wrows{position:relative;z-index:1;width:44%}
-.wrow{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 76px minmax(0,1.3fr);align-items:center;gap:clamp(.7rem,1.6vw,1.3rem);width:100%;padding:1.6rem 0;background:none;border:0;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.wrow{position:relative;display:grid;grid-template-columns:minmax(0,1.3fr) 70px minmax(0,1fr);align-items:center;gap:clamp(.6rem,1.4vw,1.1rem);width:100%;padding:1.6rem 0;background:none;border:0;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
 .wrow::before{content:"";position:absolute;left:0;top:0;width:200%;height:1px;background:var(--rule-2);z-index:5;-webkit-mask-image:var(--grunge);mask-image:var(--grunge);-webkit-mask-size:200px;mask-size:200px}
 .wrows::after{content:"";position:absolute;left:0;bottom:0;width:200%;height:1px;background:var(--rule-2);z-index:5;-webkit-mask-image:var(--grunge);mask-image:var(--grunge);-webkit-mask-size:200px;mask-size:200px}
-.wtitle{position:relative;font-family:var(--display);font-weight:400;font-size:clamp(1.5rem,3.4vw,2.6rem);text-transform:uppercase;line-height:.86;transition:color .2s var(--ease)}
+.wtitle{position:relative;font-family:var(--display);font-weight:400;font-size:clamp(1.4rem,2.9vw,2.2rem);text-transform:uppercase;line-height:.86;overflow-wrap:anywhere;transition:color .2s var(--ease)}
 .wrow:hover .wtitle{color:#fff}
 .wthumb{position:relative;overflow:hidden;background:#000;aspect-ratio:1;border:1px solid var(--rule)}
-.wthumb img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.85) brightness(1.02)}
+.wthumb img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(3.2) brightness(1.1)}
 .wblurb{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;line-height:1.5;color:var(--muted);text-transform:uppercase}
 .wblurb em{color:var(--ink);font-style:normal}
 
 /* Operator: a photo bleeding on the right, offset so it straddles into Systems */
 #profile{position:relative;isolation:isolate}
-.profile__aside{position:absolute;right:0;top:84%;width:38%;height:42%;overflow:hidden;z-index:0;pointer-events:none}
-.profile__aside img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;filter:grayscale(1) contrast(1.95) brightness(.86)}
+.profile__aside{position:absolute;right:0;top:86%;width:32%;height:66%;overflow:hidden;z-index:0;pointer-events:none}
+.profile__aside img{width:100%;height:100%;object-fit:cover;object-position:50% 78%;filter:grayscale(1) contrast(3.2) brightness(.97)}
 .profile__aside::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.55;mix-blend-mode:overlay;background-image:var(--noise)}
 .profile__aside::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,transparent 1px,rgba(11,11,11,.2) 1.6px) 0 0/4px 4px;mix-blend-mode:multiply}
 .profile .wrap,#profile .wrap{position:relative;z-index:1}
@@ -202,18 +222,25 @@ main[inert]{filter:blur(1px)}
 #contact{position:relative;isolation:isolate}
 #contact .contact__big{position:relative;z-index:1;mix-blend-mode:difference}
 /* photo straddling the systems -> contact boundary, offset so it lines up with nothing */
-.contact__aside{position:absolute;right:0;top:-15%;width:48%;height:80%;overflow:hidden;z-index:0;pointer-events:none}
-.contact__aside img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;filter:grayscale(1) contrast(1.9) brightness(.95)}
-.contact__aside::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.55;mix-blend-mode:overlay;background-image:var(--noise)}
-.contact__aside::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,transparent 1px,rgba(11,11,11,.2) 1.6px) 0 0/4px 4px;mix-blend-mode:multiply}
-/* grainy dissolve: feather the edges into the background, roughened by noise so it
-   never reads as a clean rectangle or a tidy shadow */
-.work__aside,.profile__aside,.contact__aside{
-  -webkit-mask-image:radial-gradient(150% 135% at 52% 46%,#000 50%,transparent 100%),var(--grunge-light);
-  mask-image:radial-gradient(150% 135% at 52% 46%,#000 50%,transparent 100%),var(--grunge-light);
-  -webkit-mask-size:cover,300px;mask-size:cover,300px;
-  -webkit-mask-repeat:no-repeat,repeat;mask-repeat:no-repeat,repeat;
-  -webkit-mask-composite:source-in;mask-composite:intersect}
+/* CLEAN image on top, with a separate GRAINY SHADOW blob cast BEHIND it (::before).
+   No overflow:hidden so the shadow can spill past the photo like a real cast shadow. */
+.contact__aside{position:absolute;right:0;top:-15%;width:48%;height:80%;z-index:0;pointer-events:none}
+.contact__aside img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:50% 42%;
+  filter:grayscale(1) contrast(3.1) brightness(1.05);
+  -webkit-mask-image:radial-gradient(130% 130% at 58% 42%,#000 50%,transparent 100%);
+  mask-image:radial-gradient(130% 130% at 58% 42%,#000 50%,transparent 100%);
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.contact__aside::before{content:"";position:absolute;z-index:0;pointer-events:none;
+  left:-14%;right:7%;top:-3%;bottom:-16%;            /* offset down-left, kept off the right edge */
+  background-image:var(--noise);background-size:230px;background-repeat:repeat;
+  opacity:.5;mix-blend-mode:screen;filter:blur(11px) contrast(1.35);
+  -webkit-mask-image:radial-gradient(68% 66% at 46% 58%,#000 26%,transparent 80%);
+  mask-image:radial-gradient(68% 66% at 46% 58%,#000 26%,transparent 80%)}
+/* clean soft edge fade for the other two asides (contrast does the border-blending) */
+.work__aside,.profile__aside{
+  -webkit-mask-image:radial-gradient(122% 122% at 50% 45%,#000 52%,transparent 100%);
+  mask-image:radial-gradient(122% 122% at 50% 45%,#000 52%,transparent 100%);
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
 .contact__big{font-family:var(--display);font-weight:400;font-size:clamp(3rem,13vw,9rem);line-height:.82;margin:0 0 2rem;text-transform:uppercase}
 .channels{display:grid;gap:.8rem;max-width:680px;position:relative;z-index:2}
 .channel{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1rem;padding:1rem 1.2rem;border:1px solid var(--rule-2);border-radius:999px;transition:border-color .2s var(--ease),background .2s var(--ease),transform .12s var(--ease)}
@@ -259,7 +286,7 @@ dialog::backdrop{background:rgba(5,5,5,.86)}
   .collage{height:54vh}
   .blend span{font-size:clamp(2.6rem,13vw,5rem)}
   .introbar{grid-template-columns:1fr;gap:.7rem}
-  .brace{font-size:4.5rem;line-height:.7;margin-top:.3rem}
+  .brace{display:none}
   .mh__intro{max-width:none}
   .mh__side{display:none}
   /* all bleeding side photos + their title-invert are desktop-only */
