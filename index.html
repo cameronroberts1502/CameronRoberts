@@ -26,8 +26,7 @@
 
 <!-- GLITCH LOADER -->
 <div class="loader" id="loader" aria-hidden="true">
-  <img class="loader__logo" src="assets/img/logo-crop.jpg" alt="" />
-  <div class="loader__name" data-text="Cameron Roberts">Cameron Roberts</div>
+  <img class="loader__logo" src="assets/img/logo.png" alt="" />
   <div class="loader__line mono">Receiving signal</div>
   <div class="loader__scan" aria-hidden="true"></div>
 </div>
@@ -35,7 +34,7 @@
 <!-- ============================ MASTHEAD ============================ -->
 <header>
   <nav class="nav" aria-label="Primary">
-    <a class="brand" href="#main"><img src="assets/img/logo-crop.jpg" alt="Cameron Roberts" /></a>
+    <a class="brand" href="#main"><img src="assets/img/logo.png" alt="Cameron Roberts" /></a>
     <div class="nav__links">
       <a href="#work">Work</a><a href="#profile">Profile</a><a href="#systems">Systems</a><a href="#contact">Contact</a>
     </div>
@@ -82,6 +81,11 @@
       </header>
       <div class="worklist" data-reveal>
         <div class="wrows">
+          <button class="wrow" type="button" data-dialog="dlg-mission" aria-haspopup="dialog">
+            <span class="wtitle glitch" data-text="Mission Control">Mission Control</span>
+            <span class="wthumb"><img src="assets/img/MISSIONCONTROL.png" alt="" loading="lazy" /></span>
+            <span class="wblurb">A desk console for launches, scores &amp; the grid. <em>Solo</em></span>
+          </button>
           <button class="wrow" type="button" data-dialog="dlg-astra" aria-haspopup="dialog">
             <span class="wtitle glitch" data-text="A.S.T.R.A.">A.S.T.R.A.</span>
             <span class="wthumb"><img src="Photos/GUI_ASTRA.png" alt="" loading="lazy" /></span>
@@ -112,9 +116,12 @@
     <div class="profile__aside" aria-hidden="true"><img src="assets/img/gt3.jpeg" alt="" loading="lazy" /></div>
     <div class="scrap scrap--dots" aria-hidden="true" style="top:10%;right:7%"></div>
     <div class="wrap">
-      <header class="sec__head" data-reveal>
-        <h2 class="sec__title glitch" id="profile-title" data-text="[ The Operator">[ The Operator</h2>
-        <p class="sec__sub">The person behind the boards</p>
+      <header class="sec__head sec__head--split" data-reveal>
+        <div>
+          <h2 class="sec__title glitch" id="profile-title" data-text="[ The Operator">[ The Operator</h2>
+          <p class="sec__sub">The person behind the boards</p>
+        </div>
+        <div class="sec__shape" aria-hidden="true"></div>
       </header>
       <div class="profile__grid">
         <div data-reveal>
@@ -180,6 +187,32 @@
 
 <!-- ============================ PROJECT DIALOGS ============================ -->
 <section aria-label="Project details">
+<dialog id="dlg-mission" aria-labelledby="dlg-mission-t">
+  <div class="dlg__head">
+    <div><h2 class="dlg__title" id="dlg-mission-t">Mission Control</h2><p class="dlg__sub">A desk console for launches, scores &amp; the grid · Solo</p></div>
+    <button class="dlg__close" type="button" data-close aria-label="Close"><span aria-hidden="true">✕</span></button>
+  </div>
+  <div class="dlg__body">
+    <h3>Overview</h3>
+    <p>A small desk device that keeps the things I follow one button away. A custom PCB built around a Seeed Studio XIAO ESP32-C3 drives an OLED display and four tactile buttons, pulling live data over Wi-Fi and rendering it on the screen.</p>
+    <p>Each button is a mode. One cycles the top five upcoming rocket launches with a live countdown to lift-off. The others jump to NBA live scores, NHL live scores, and a Formula 1 view: countdown to the next race, the latest race results, and the current drivers' championship ladder.</p>
+    <h3>Specifications</h3>
+    <dl class="dlg__spec">
+      <div><dt>MCU</dt><dd>Seeed XIAO ESP32-C3</dd></div><div><dt>Display</dt><dd>OLED (SPI)</dd></div>
+      <div><dt>Input</dt><dd>4 tactile buttons</dd></div><div><dt>Link</dt><dd>Wi-Fi · REST APIs</dd></div>
+      <div><dt>Board</dt><dd>Custom PCB</dd></div><div><dt>Power</dt><dd>USB-C</dd></div>
+    </dl>
+    <h3>Highlights</h3>
+    <ul class="dlg__points">
+      <li>One custom board integrating the ESP32-C3, OLED and four-button I/O.</li>
+      <li>Firmware fetches and parses live JSON over Wi-Fi, then lays it out on the OLED.</li>
+      <li>Four modes: launch countdowns, NBA scores, NHL scores, and Formula 1.</li>
+      <li>F1 mode shows the next-race countdown, latest results and the drivers' standings.</li>
+    </ul>
+    <h3>Gallery</h3>
+    <div class="dlg__gallery"><img src="assets/img/MISSIONCONTROL.png" alt="Mission Control PCB layout: a board around a Seeed XIAO ESP32-C3 with an OLED footprint and four buttons marked with rocket, basketball, hockey and chequered-flag icons." loading="lazy" /></div>
+  </div>
+</dialog>
 <dialog id="dlg-astra" aria-labelledby="dlg-astra-t">
   <div class="dlg__head">
     <div><h2 class="dlg__title" id="dlg-astra-t">A.S.T.R.A.</h2><p class="dlg__sub">Autonomous tracking, rendezvous &amp; alignment · Team of 2</p></div>
