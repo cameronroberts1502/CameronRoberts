@@ -242,7 +242,7 @@
     try { composer.dispose && composer.dispose(); } catch (e) {}
     try { renderer.dispose(); renderer.forceContextLoss && renderer.forceContextLoss(); } catch (e) {}
   }
-  function resize() { W = innerWidth; H = innerHeight; camera.aspect = W / H; camera.fov = (W / H < 1) ? 62 : 44; /* widen in portrait so wide subjects fit */ camera.updateProjectionMatrix(); renderer.setSize(W, H, false); composer.setSize(W, H); smokeCanvas.width = W; smokeCanvas.height = H; }
+  function resize() { W = innerWidth; H = innerHeight; camera.aspect = W / H; camera.fov = 44; /* same FOV on every device so framing/perspective matches */ camera.updateProjectionMatrix(); renderer.setSize(W, H, false); composer.setSize(W, H); smokeCanvas.width = W; smokeCanvas.height = H; }
   addEventListener("resize", resize);
 
   /* failsafe: never leave the viewer stuck on the intro */
