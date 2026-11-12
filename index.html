@@ -18,6 +18,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/css/main.css" />
 <script>if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){document.documentElement.classList.add('js');}</script>
+<!-- intro gate: decide (synchronously) whether the 3D intro plays this load -->
+<script>(function(){var play=false;try{play=!matchMedia('(prefers-reduced-motion:reduce)').matches&&!(innerWidth<820||/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent))&&!sessionStorage.getItem('introPlayed')&&!(navigator.connection&&navigator.connection.saveData);if(play){var c=document.createElement('canvas');play=!!(window.WebGLRenderingContext&&(c.getContext('webgl')||c.getContext('experimental-webgl')));}}catch(e){play=false;}window.PLAY_INTRO=play;if(play){try{sessionStorage.setItem('introPlayed','1');}catch(e){}var s=document.createElement('style');s.textContent='#loader{display:none!important}';document.head.appendChild(s);}})();</script>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/","gsap":"https://cdn.jsdelivr.net/npm/gsap@3.12.5/+esm"}}
+</script>
+<script type="module" src="assets/js/intro3d.js"></script>
 </head>
 <body>
 
@@ -126,7 +132,7 @@
       <div class="profile__grid">
         <div data-reveal>
           <p>I'm a fourth-year Bachelor and Master of <b>Electrical &amp; Computer Engineering</b> student at the University of Queensland. I like where firmware meets fabrication: copper traces, control loops, and the moment a board you laid out yourself boots for the first time.</p>
-          <p>My interests run toward <b>space, defence, and motorsport</b>. Fields where the engineering has to be ambitious and unforgiving. Off the bench I'm under my <b>E46 330ci</b>, digging through records, or reading about Apollo.</p>
+          <p>My interests run toward <b>space, defence, and motorsport</b>. Fields where the engineering has to be ambitious and unforgiving. Off the bench I'm digging through records, or reading about Apollo.</p>
           <p>Most of what's here I designed end to end: schematic, layout, firmware, and the interface that makes the hardware usable. I like the full stack of a physical product, from the first net to the last detail.</p>
         </div>
         <div class="manifest" data-reveal>

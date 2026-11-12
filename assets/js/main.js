@@ -67,7 +67,8 @@
   var dismissed = false;
   function dismiss() { if (dismissed) return; dismissed = true; if (main) main.removeAttribute("inert"); if (loader && loader.parentNode) loader.parentNode.removeChild(loader); }
 
-  if (!loader) { /* none */ }
+  if (window.PLAY_INTRO) { /* the 3D intro owns the load + reveal; leave this alone */ }
+  else if (!loader) { /* none */ }
   else if (reduce) { dismiss(); }
   else {
     if (main) main.setAttribute("inert", "");
