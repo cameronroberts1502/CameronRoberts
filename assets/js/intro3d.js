@@ -81,7 +81,7 @@
 
   let W = innerWidth, H = innerHeight;
   renderer = new THREE.WebGLRenderer({ antialias: true, precision: "highp", stencil: false });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 820 ? 1.5 : 2)); // lighter on phones
   renderer.setSize(W, H, false); renderer.setClearColor(0x08080b, 1);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.domElement.style.cssText = "position:fixed;inset:0;width:100%;height:100%;display:block;z-index:1";
@@ -110,7 +110,7 @@
   const CFG = {
     rocket: { file: base + "saturnv.glb", thr: 16, fit: 9, axis: 1, rot: [0, 0, 0], pos: [0, 0, 0] },
     jet: { file: base + "f16.glb", thr: 18, fit: 9, axis: 0, rot: [0.05, 0.7, 0.12], pos: [14, 26, -34] },
-    car: { file: base + "rb9.glb", thr: 22, fit: 8, axis: 2, rot: [0, -0.6, 0], pos: [30, -14, -74] }
+    car: { file: base + "rb9.glb", thr: 22, fit: 8, axis: 2, rot: [0, -0.15, 0], pos: [30, -14, -74] }
   };
   const gltf = new GLTFLoader();
   const vehicles = {};
@@ -148,7 +148,7 @@
   function ss(x, a, b) { x = Math.max(0, Math.min(1, (x - a) / (b - a))); return x * x * (3 - 2 * x); }
   const _pv = new THREE.Vector3();
   function drawCloud(ctx, x, y, R, seed, age, op) { ctx.save(); ctx.translate(x, y); ctx.globalAlpha = op; let s = seed; const rnd = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; }; const lobes = 8, pts = []; for (let i = 0; i < lobes; i++) { const a = i / lobes * 6.283; const rr = R * (0.72 + rnd() * 0.32 + 0.07 * Math.sin(a * 3 + age)); pts.push([Math.cos(a) * rr, Math.sin(a) * rr * 0.88]); } ctx.beginPath(); for (let i = 0; i < lobes; i++) { const p0 = pts[i], p1 = pts[(i + 1) % lobes]; const mx = (p0[0] + p1[0]) / 2, my = (p0[1] + p1[1]) / 2; const len = Math.hypot(mx, my) || 1; const bulge = R * 0.42; const cx = mx + mx / len * bulge, cy = my + my / len * bulge; if (i === 0) ctx.moveTo(p0[0], p0[1]); ctx.quadraticCurveTo(cx, cy, p1[0], p1[1]); } ctx.closePath(); ctx.strokeStyle = "#ECE6D8"; ctx.lineWidth = 1.4; ctx.lineJoin = "round"; ctx.lineCap = "round"; ctx.shadowColor = "rgba(236,230,216,0.65)"; ctx.shadowBlur = 7; ctx.stroke(); ctx.restore(); }
-  function drawSmoke() { sctx.clearRect(0, 0, W, H); camera.updateMatrixWorld(); const vis = []; for (const p of puffs) { if (!p.live) continue; _pv.set(p.x, p.y, p.z); const d = camera.position.distanceTo(_pv); _pv.project(camera); if (_pv.z > 1) continue; vis.push({ sx: (_pv.x * .5 + .5) * W, sy: (1 - (_pv.y * .5 + .5)) * H, d, p }); } vis.sort((a, b) => b.d - a.d); for (const o of vis) { const p = o.p; const age = (simTime - p.born) / p.ttl; const wR = p.r0 + (p.r1 - p.r0) * age; const sR = wR * (H * 0.5) / (o.d * FOVT); if (sR < 1.5) continue; const op = Math.min(age / 0.12, 1) * (1 - ss(age, 0.62, 1)) * 0.96; drawCloud(sctx, o.sx, o.sy, sR, p.seed, age * 3 + p.rot, op); } }
+  function drawSmoke() { sctx.clearRect(0, 0, W, H); camera.updateMatrixWorld(); const FOVT = Math.tan(camera.fov * Math.PI / 360); const vis = []; for (const p of puffs) { if (!p.live) continue; _pv.set(p.x, p.y, p.z); const d = camera.position.distanceTo(_pv); _pv.project(camera); if (_pv.z > 1) continue; vis.push({ sx: (_pv.x * .5 + .5) * W, sy: (1 - (_pv.y * .5 + .5)) * H, d, p }); } vis.sort((a, b) => b.d - a.d); for (const o of vis) { const p = o.p; const age = (simTime - p.born) / p.ttl; const wR = p.r0 + (p.r1 - p.r0) * age; const sR = wR * (H * 0.5) / (o.d * FOVT); if (sR < 1.5) continue; const op = Math.min(age / 0.12, 1) * (1 - ss(age, 0.62, 1)) * 0.96; drawCloud(sctx, o.sx, o.sy, sR, p.seed, age * 3 + p.rot, op); } }
 
   /* ---- afterburner ---- */
   let abGroup = null, abMat = null, abBaseScale = 1;
@@ -242,7 +242,7 @@
     try { composer.dispose && composer.dispose(); } catch (e) {}
     try { renderer.dispose(); renderer.forceContextLoss && renderer.forceContextLoss(); } catch (e) {}
   }
-  function resize() { W = innerWidth; H = innerHeight; camera.aspect = W / H; camera.updateProjectionMatrix(); renderer.setSize(W, H, false); composer.setSize(W, H); smokeCanvas.width = W; smokeCanvas.height = H; }
+  function resize() { W = innerWidth; H = innerHeight; camera.aspect = W / H; camera.fov = (W / H < 1) ? 62 : 44; /* widen in portrait so wide subjects fit */ camera.updateProjectionMatrix(); renderer.setSize(W, H, false); composer.setSize(W, H); smokeCanvas.width = W; smokeCanvas.height = H; }
   addEventListener("resize", resize);
 
   /* failsafe: never leave the viewer stuck on the intro */

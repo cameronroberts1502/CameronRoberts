@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="assets/css/main.css" />
 <script>if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){document.documentElement.classList.add('js');}</script>
 <!-- intro gate: decide (synchronously) whether the 3D intro plays this load -->
-<script>(function(){var play=false;try{play=!matchMedia('(prefers-reduced-motion:reduce)').matches&&!(innerWidth<820||/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent))&&!sessionStorage.getItem('introPlayed')&&!(navigator.connection&&navigator.connection.saveData);if(play){var c=document.createElement('canvas');play=!!(window.WebGLRenderingContext&&(c.getContext('webgl')||c.getContext('experimental-webgl')));}}catch(e){play=false;}window.PLAY_INTRO=play;if(play){try{sessionStorage.setItem('introPlayed','1');}catch(e){}var s=document.createElement('style');s.textContent='#loader{display:none!important}';document.head.appendChild(s);}})();</script>
+<script>(function(){var play=false;try{play=!matchMedia('(prefers-reduced-motion:reduce)').matches&&!sessionStorage.getItem('introPlayed')&&!(navigator.connection&&navigator.connection.saveData);if(play){var c=document.createElement('canvas');play=!!(window.WebGLRenderingContext&&(c.getContext('webgl')||c.getContext('experimental-webgl')));}}catch(e){play=false;}window.PLAY_INTRO=play;if(play){try{sessionStorage.setItem('introPlayed','1');}catch(e){}var s=document.createElement('style');s.textContent='#loader{display:none!important}';document.head.appendChild(s);}})();</script>
 <script type="importmap">
 {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/","gsap":"https://cdn.jsdelivr.net/npm/gsap@3.12.5/+esm"}}
 </script>
